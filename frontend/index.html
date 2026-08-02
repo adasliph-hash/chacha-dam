@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chacha Dam Project</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen" class="screen">
+    <div class="login-card">
+      <h1>🌊 Chacha Dam</h1>
+      <p class="subtitle">Project Management Dashboard</p>
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <p id="login-error" class="error"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="app" class="screen hidden">
+    <header>
+      <div class="logo">🌊 Chacha Dam</div>
+      <nav id="nav">
+        <button data-tab="income" class="active">Income</button>
+        <button data-tab="costs">Costs</button>
+        <button data-tab="percent">Progress</button>
+        <button data-tab="ecost">E-Cost</button>
+        <button data-tab="chat">Chat</button>
+      </nav>
+      <button id="logout-btn">Logout</button>
+    </header>
+
+    <main>
+      <section id="income-tab" class="tab active"></section>
+      <section id="costs-tab" class="tab"></section>
+      <section id="percent-tab" class="tab"></section>
+      <section id="ecost-tab" class="tab"></section>
+      <section id="chat-tab" class="tab"></section>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/income.js"></script>
+  <script src="js/costs.js"></script>
+  <script src="js/percent.js"></script>
+  <script src="js/ecost.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
