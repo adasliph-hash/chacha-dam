@@ -9,50 +9,50 @@ async function loadEcost() {
     let html = `
       <div class="stats">
         <div class="stat">
-          <div class="label">Total Estimated</div>
-          <div class="value">${formatMoney(data.totalEstimated)}</div>
+          <div class="label">Overhead / Other</div>
+          <div class="value">${formatMoney(data.overheadTotal)}</div>
         </div>
         <div class="stat">
-          <div class="label">Total Actual</div>
-          <div class="value">${formatMoney(data.totalActual)}</div>
+          <div class="label">Machinery Cost</div>
+          <div class="value">${formatMoney(data.machineryTotal)}</div>
         </div>
         <div class="stat">
-          <div class="label">Variance</div>
-          <div class="value" style="color:${data.totalVariance >= 0 ? '#dc2626' : '#1a7a4c'}">
-            ${formatMoney(data.totalVariance)} (${data.totalVariancePercent}%)
-          </div>
+          <div class="label">Grand Total</div>
+          <div class="value">${formatMoney(data.grandTotal)}</div>
         </div>
       </div>
     `;
 
-    let idx = 0;
-    data.categories.forEach(cat => {
-      const color = cat.status === 'over' ? '#dc2626' : cat.status === 'under' ? '#1a7a4c' : '#0ea5e9';
-      const cardId = `ecost-cat-${idx++}`;
+    data.categories.forEach((cat, idx) => {
+      const cardId = `ecost-cat-${idx}`;
       html += `
         <div class="bill-card" id="${cardId}">
           <div class="bill-row" onclick="document.getElementById('${cardId}').classList.toggle('open')">
-            <div class="bill-icon">${cat.icon || '📈'}</div>
+            <div class="bill-icon">${cat.icon || '💰'}</div>
             <div class="bill-info">
               <div class="bill-name">${cat.name}</div>
-              <div class="bill-meta" style="color:${color}">${formatMoney(cat.variance)} (${cat.variancePercent}%)</div>
+              <div class="bill-meta">${formatMoney(cat.total)} <span class="count">(${cat.items.length} items)</span></div>
             </div>
             <div class="bill-chevron">▼</div>
           </div>
           <div class="bill-items">
             <table>
-              <tr>
-                <td>Estimated</td>
-                <td>${formatMoney(cat.estimated)}</td>
-              </tr>
-              <tr>
-                <td>Actual</td>
-                <td>${formatMoney(cat.actual)}</td>
-              </tr>
-              <tr>
-                <td>Variance</td>
-                <td style="color:${color}">${formatMoney(cat.variance)} (${cat.variancePercent}%)</td>
-              </tr>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Description</th>
+                  <th>Amount (ETB)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${cat.items.map(item => `
+                  <tr>
+                    <td>${item.no}</td>
+                    <td>${item.description}</td>
+                    <td>${item.amount ? formatMoney(item.amount) : '—'}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
             </table>
           </div>
         </div>

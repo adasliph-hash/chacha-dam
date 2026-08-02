@@ -100,59 +100,74 @@ function getPercentSummary() {
 }
 
 function getEcostSummary() {
-  // For now we still compute estimated vs actual from cost data
-  // You can later store estimated values in the database
-  const costData = getCostSummary();
+  // Real "Overhead / Other Expenses" itemized breakdown
+  const overheadItems = [
+    { no: 1, description: 'Spare Part Expense – Ajima Chacha Irrigation Lot 3', amount: 23727540.32 },
+    { no: 2, description: 'Tyre & Inner Tube Maintenance', amount: 1877257.00 },
+    { no: 3, description: 'Fuel & Lubricants Expense – Ajima Chacha Irrigation Lot 3', amount: 800.00 },
+    { no: 4, description: 'Mobile Card Expense', amount: 273723.16 },
+    { no: 5, description: 'Car Guard', amount: 60100.00 },
+    { no: 6, description: 'Local Construction Material (Sand, Gravel, Stone, Tree & Lot 3)', amount: 192036.43 },
+    { no: 7, description: 'Camping Generator Fuel & Lubricants Expense', amount: 6217698.53 },
+    { no: 8, description: 'Over Time', amount: 0 },
+    { no: 9, description: 'Calibration of Total Station', amount: 100096.63 },
+    { no: 10, description: 'Medical Expense', amount: 82479.27 },
+    { no: 11, description: 'Other Cost (Qret)', amount: 27955.00 },
+    { no: 12, description: 'Cement Expense Lot-3', amount: 0 },
+    { no: 13, description: 'Test Cost', amount: 82317.90 },
+    { no: 14, description: 'Service Cost', amount: 0 },
+    { no: 15, description: 'Fuel for Welding', amount: 28713.10 },
+    { no: 16, description: 'For Mestengdo', amount: 75806.40 },
+    { no: 17, description: 'Travel Expense and Other', amount: 3551796.85 },
+    { no: 18, description: 'DL for Green Legacy', amount: 4200.00 },
+    { no: 19, description: 'Uniform and Clothing Expense – Ajima Chacha Irri Lot 3', amount: 16973.00 },
+    { no: 20, description: 'Medical Expense (2)', amount: 149235.35 },
+    { no: 21, description: 'Rent Cost of House, Storage Area, etc.', amount: 308500.00 },
+    { no: 22, description: 'Transport Cost for Machinery (Low-Bed)', amount: 120000.00 },
+    { no: 23, description: 'Other Costs – Irrigation Project AJIMA CHACHA LOT-03', amount: 312222.38 },
+    { no: 24, description: 'Grease', amount: 6990.00 },
+    { no: 25, description: 'Camp Maintenance (Timber, Poles, Nails, Chipwood, Purlin, etc.)', amount: 121541.44 },
+    { no: 26, description: 'Office Desktop and Laptop', amount: 305798.17 },
+    { no: 27, description: 'Benzine, Flasher, Brake Fluid, Transmission, Gear Oil, Grease, Coolant, ATF', amount: 5726696.73 },
+    { no: 28, description: 'Car Guard (2)', amount: 35950.00 },
+    { no: 29, description: 'Machinery Maintenance', amount: 60940.00 },
+    { no: 30, description: 'Tyre & Inner Tube', amount: 13102339.85 }
+  ];
 
-  const estimatedMap = {
-    labour: 9500000,
-    admin: 52000000,
-    staff: 65000000,
-    material: 185000000,
-    machinery: 135000000,
-    overhead: 35000000
-  };
+  // Real "Machinery Cost" breakdown
+  const machineryItems = [
+    { no: 1, description: 'Dozer', amount: 8722732.48 },
+    { no: 2, description: 'Excavator', amount: 31238561.23 },
+    { no: 3, description: 'Loader', amount: 5767979.23 },
+    { no: 4, description: 'Grader', amount: 915668.27 },
+    { no: 5, description: 'Dump truck', amount: 77781197.15 },
+    { no: 6, description: 'Fuel Track', amount: 2798061.23 },
+    { no: 7, description: 'Shower truck', amount: 2837275.12 }
+  ];
 
-  const icons = {
-    labour: '👷',
-    admin: '📋',
-    staff: '👔',
-    material: '🧱',
-    machinery: '🚜',
-    overhead: '📊'
-  };
-
-  let totalEstimated = 0;
-  let totalActual = 0;
-
-  const detailed = Object.entries(costData.categories).map(([key, cat]) => {
-    const estimated = estimatedMap[key] || cat.total;
-    const actual = cat.total;
-    const variance = actual - estimated;
-    const variancePercent = estimated ? Number(((variance / estimated) * 100).toFixed(1)) : 0;
-
-    totalEstimated += estimated;
-    totalActual += actual;
-
-    return {
-      name: key.charAt(0).toUpperCase() + key.slice(1),
-      estimated,
-      actual,
-      variance,
-      variancePercent,
-      status: variance > 0 ? 'over' : variance < 0 ? 'under' : 'on-track',
-      icon: icons[key] || '📊'
-    };
-  });
+  const overheadTotal = overheadItems.reduce((s, i) => s + i.amount, 0);
+  const machineryTotal = machineryItems.reduce((s, i) => s + i.amount, 0);
 
   return {
-    totalEstimated,
-    totalActual,
-    totalVariance: totalActual - totalEstimated,
-    totalVariancePercent: totalEstimated
-      ? Number((((totalActual - totalEstimated) / totalEstimated) * 100).toFixed(1))
-      : 0,
-    categories: detailed
+    overheadTotal,
+    machineryTotal,
+    grandTotal: overheadTotal + machineryTotal,
+    categories: [
+      {
+        key: 'overhead',
+        name: 'Overhead / Other Expenses',
+        icon: '💸',
+        total: overheadTotal,
+        items: overheadItems
+      },
+      {
+        key: 'machinery',
+        name: 'Machinery Cost',
+        icon: '🏗️',
+        total: machineryTotal,
+        items: machineryItems
+      }
+    ]
   };
 }
 
