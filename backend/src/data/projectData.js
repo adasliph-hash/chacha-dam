@@ -30,6 +30,7 @@ function getIncomeSummary() {
       id: bill.id,
       name: bill.name,
       icon: bill.icon,
+      type: CONTRACT_BILL_IDS.includes(bill.id) ? 'contract' : 'siteWork',
       items
     };
   });

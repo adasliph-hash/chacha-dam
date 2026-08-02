@@ -29,7 +29,6 @@ async function tryTelegramAutoLogin() {
   }
 
   tg.ready();
-  tg.expand();
 
   try {
     const data = await api.apiFetch('/api/auth/telegram-login', {

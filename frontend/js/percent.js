@@ -1,6 +1,6 @@
 async function loadPercent() {
   const container = document.getElementById('percent-tab');
-  container.innerHTML = '<p>Loading progress data...</p>';
+  container.innerHTML = '<p style="padding:1rem;color:#8a8574">Loading...</p>';
 
   try {
     const res = await api.apiFetch('/api/percent');
@@ -31,13 +31,18 @@ async function loadPercent() {
 
     data.categories.forEach(cat => {
       html += `
-        <div class="card">
-          <h2>${cat.icon} ${cat.name}</h2>
-          <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem">
-            <span>${cat.percent}%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width:${cat.percent}%"></div>
+        <div class="bill-card">
+          <div class="bill-row" style="cursor:default">
+            <div class="bill-icon">${cat.icon || '📊'}</div>
+            <div class="bill-info" style="width:100%">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div class="bill-name">${cat.name}</div>
+                <div class="bill-meta">${cat.percent}%</div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width:${cat.percent}%"></div>
+              </div>
+            </div>
           </div>
         </div>
       `;
@@ -45,7 +50,7 @@ async function loadPercent() {
 
     container.innerHTML = html;
   } catch (err) {
-    container.innerHTML = `<p class="error">Error: ${err.message}</p>`;
+    container.innerHTML = `<p class="error" style="padding:1rem">Error: ${err.message}</p>`;
   }
 }
 
