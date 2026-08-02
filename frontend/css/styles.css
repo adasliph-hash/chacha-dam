@@ -312,23 +312,41 @@ th { color: #9c9686; font-weight: 600; font-size: 0.75rem; text-transform: upper
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.15rem;
+  gap: 0.2rem;
   background: transparent;
   border: none;
   color: #8b93a3;
-  padding: 0.5rem 0.8rem;
+  padding: 0.45rem 0.75rem;
   border-radius: 1.2rem;
   cursor: pointer;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 600;
   white-space: nowrap;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
 }
 
-#nav button .nav-icon { font-size: 1.1rem; }
+#nav button:active { transform: scale(0.94); }
+
+#nav button .nav-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s;
+}
 
 #nav button.active {
   background: #3a3320;
   color: #f0c04a;
+}
+
+#nav button.active .nav-icon {
+  background: rgba(240, 192, 74, 0.15);
 }
 
 /* Responsive */
