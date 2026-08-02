@@ -1,0 +1,12 @@
+{
+  "name": "chacha-dam-frontend",
+  "version": "1.0.0",
+  "description": "Chacha Dam Project Frontend (static)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -1,8 +1,10 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-// Database file location (inside backend folder)
-const dbPath = path.join(__dirname, '../../chacha.db');
+// Database file location.
+// On Railway, set DB_PATH to a path inside your mounted Volume (e.g. /data/chacha.db)
+// so the database survives redeploys. Falls back to local file for dev.
+const dbPath = process.env.DB_PATH || path.join(__dirname, '../../chacha.db');
 
 const db = new Database(dbPath);
 

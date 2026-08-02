@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3000';
+const API_BASE = window.API_BASE_URL || 'http://localhost:3000';
 
 function getToken() {
   return localStorage.getItem('token');
