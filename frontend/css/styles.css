@@ -67,14 +67,9 @@ body {
 
 .error { color: #f87171; margin-top: 1rem; font-size: 0.9rem; }
 
-/* ===== Top Bar ===== */
+/* ===== Top Bar (hidden — Telegram already shows the app name at the top) ===== */
 header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.9rem 1.2rem;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e3da;
+  display: none;
 }
 
 .logo {
