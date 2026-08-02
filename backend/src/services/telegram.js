@@ -53,4 +53,60 @@ function sendTelegramMessage(text) {
   });
 }
 
-module.exports = { sendTelegramMessage };
+/**
+ * Send a document (PDF, Word, Excel, etc.) to Telegram using Bot API
+ * @param {Buffer} buffer - File contents
+ * @param {string} filename - Original file name
+ * @param {string} caption - Optional caption text
+ */
+async function sendTelegramDocument(buffer, filename, caption) {
+  const token = process.env.BOT_TOKEN;
+  const chatId = process.env.CHAT_ID;
+
+  if (!token || !chatId || token === 'replace-later' || chatId === 'replace-later') {
+    throw new Error('BOT_TOKEN or CHAT_ID is not configured');
+  }
+
+  const form = new FormData();
+  form.append('chat_id', chatId);
+  if (caption) form.append('caption', caption.slice(0, 1024));
+  form.append('document', new Blob([buffer]), filename);
+
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendDocument`, {
+    method: 'POST',
+    body: form
+  });
+  const json = await res.json();
+  if (!json.ok) throw new Error(json.description || 'Telegram API error');
+  return json;
+}
+
+/**
+ * Send a photo to Telegram using Bot API
+ * @param {Buffer} buffer - Image contents
+ * @param {string} filename - Original file name
+ * @param {string} caption - Optional caption text
+ */
+async function sendTelegramPhoto(buffer, filename, caption) {
+  const token = process.env.BOT_TOKEN;
+  const chatId = process.env.CHAT_ID;
+
+  if (!token || !chatId || token === 'replace-later' || chatId === 'replace-later') {
+    throw new Error('BOT_TOKEN or CHAT_ID is not configured');
+  }
+
+  const form = new FormData();
+  form.append('chat_id', chatId);
+  if (caption) form.append('caption', caption.slice(0, 1024));
+  form.append('photo', new Blob([buffer]), filename);
+
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+    method: 'POST',
+    body: form
+  });
+  const json = await res.json();
+  if (!json.ok) throw new Error(json.description || 'Telegram API error');
+  return json;
+}
+
+module.exports = { sendTelegramMessage, sendTelegramDocument, sendTelegramPhoto };
