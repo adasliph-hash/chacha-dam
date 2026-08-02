@@ -6,8 +6,8 @@
 
 body {
   font-family: system-ui, -apple-system, sans-serif;
-  background: #0f172a;
-  color: #e2e8f0;
+  background: #f0efe8;
+  color: #1e2430;
   min-height: 100vh;
 }
 
@@ -19,7 +19,7 @@ body {
   display: none !important;
 }
 
-/* ===== Login ===== */
+/* ===== Login (fallback, rarely seen inside Telegram) ===== */
 #login-screen {
   display: flex;
   align-items: center;
@@ -35,18 +35,11 @@ body {
   max-width: 380px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.4);
   text-align: center;
+  color: #e2e8f0;
 }
 
-.login-card h1 {
-  font-size: 1.8rem;
-  margin-bottom: 0.3rem;
-}
-
-.subtitle {
-  color: #94a3b8;
-  margin-bottom: 1.8rem;
-  font-size: 0.95rem;
-}
+.login-card h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+.subtitle { color: #94a3b8; margin-bottom: 1.8rem; font-size: 0.95rem; }
 
 .login-card input {
   width: 100%;
@@ -58,11 +51,7 @@ body {
   color: #e2e8f0;
   font-size: 1rem;
 }
-
-.login-card input:focus {
-  outline: none;
-  border-color: #38bdf8;
-}
+.login-card input:focus { outline: none; border-color: #38bdf8; }
 
 .login-card button {
   width: 100%;
@@ -74,146 +63,196 @@ body {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.login-card button:hover {
-  background: #0284c7;
-}
+.error { color: #f87171; margin-top: 1rem; font-size: 0.9rem; }
 
-.error {
-  color: #f87171;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
-
-/* ===== Header ===== */
+/* ===== Top Bar ===== */
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
-  background: #1e293b;
-  border-bottom: 1px solid #334155;
-  flex-wrap: wrap;
-  gap: 1rem;
+  padding: 0.9rem 1.2rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e3da;
 }
 
 .logo {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: 700;
-}
-
-nav {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-}
-
-nav button {
-  background: transparent;
-  border: 1px solid #334155;
-  color: #94a3b8;
-  padding: 0.5rem 1rem;
-  border-radius: 0.4rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s;
-}
-
-nav button:hover,
-nav button.active {
-  background: #0ea5e9;
-  color: white;
-  border-color: #0ea5e9;
+  color: #1e2430;
 }
 
 #logout-btn {
-  background: #ef4444;
-  color: white;
+  background: #fee2e2;
+  color: #dc2626;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
   cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 /* ===== Main Content ===== */
 main {
-  padding: 1.5rem;
-  max-width: 1200px;
+  padding: 1rem 1rem 6.5rem 1rem; /* bottom padding clears the floating nav */
+  max-width: 720px;
   margin: 0 auto;
 }
 
-.tab {
-  display: none;
-}
+.tab { display: none; }
+.tab.active { display: block; }
 
-.tab.active {
-  display: block;
-}
-
-/* Cards */
-.card {
-  background: #1e293b;
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  margin-bottom: 1.2rem;
-  border: 1px solid #334155;
-}
-
-.card h2 {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: #38bdf8;
-}
-
+/* Top summary pills (Site Work / Contract totals) */
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.7rem;
+  margin-bottom: 1rem;
 }
 
 .stat {
-  background: #0f172a;
-  padding: 1.2rem;
-  border-radius: 0.6rem;
+  background: #eeece2;
+  padding: 1rem 0.8rem;
+  border-radius: 1.2rem;
   text-align: center;
 }
 
 .stat .label {
-  font-size: 0.85rem;
-  color: #94a3b8;
+  font-size: 0.75rem;
+  color: #8a7f5c;
+  font-weight: 600;
   margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .stat .value {
-  font-size: 1.4rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #38bdf8;
+  color: #1a7a4c;
 }
+
+/* Toggle pill buttons (e.g. Site Work / Contract) */
+.toggle-row {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 0.7rem;
+  border-radius: 999px;
+  border: 1px solid #e5e3da;
+  background: #ffffff;
+  color: #55503f;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.toggle-btn.active {
+  background: #f3ecd4;
+  border-color: #d8c98f;
+  color: #8a6d1e;
+}
+
+.section-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.8rem;
+  color: #8a8574;
+  font-size: 0.85rem;
+}
+
+/* ===== Bill list (collapsible cards) ===== */
+.bill-card {
+  background: #ffffff;
+  border-radius: 1.1rem;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.bill-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+}
+
+.bill-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 50%;
+  background: #f3ecd4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.bill-info { flex: 1; min-width: 0; }
+
+.bill-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1e2430;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bill-meta {
+  font-size: 0.85rem;
+  color: #1a7a4c;
+  font-weight: 600;
+}
+
+.bill-meta .count {
+  color: #9c9686;
+  font-weight: 400;
+  margin-left: 0.3rem;
+}
+
+.bill-chevron {
+  color: #b5ae98;
+  transition: transform 0.2s;
+  font-size: 0.9rem;
+}
+
+.bill-card.open .bill-chevron { transform: rotate(180deg); }
+
+.bill-items {
+  display: none;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #f0efe8;
+}
+
+.bill-card.open .bill-items { display: block; }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 th, td {
-  padding: 0.7rem 0.5rem;
+  padding: 0.55rem 0.4rem;
   text-align: left;
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid #f0efe8;
 }
 
-th {
-  color: #94a3b8;
-  font-weight: 500;
-}
+th { color: #9c9686; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
 
 /* Progress bar */
 .progress-bar {
-  height: 12px;
-  background: #334155;
+  height: 10px;
+  background: #eeece2;
   border-radius: 6px;
   overflow: hidden;
   margin-top: 0.5rem;
@@ -221,56 +260,83 @@ th {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #0ea5e9, #22d3ee);
+  background: linear-gradient(90deg, #1a7a4c, #2fbf71);
   border-radius: 6px;
 }
 
 /* Chat */
-.chat-box {
-  display: flex;
-  flex-direction: column;
-  height: 400px;
-}
+.chat-box { display: flex; flex-direction: column; height: 60vh; }
 
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  background: #0f172a;
-  border-radius: 0.5rem;
+  background: #ffffff;
+  border-radius: 1rem;
   padding: 1rem;
   margin-bottom: 1rem;
 }
 
-.chat-input {
-  display: flex;
-  gap: 0.5rem;
-}
+.chat-input { display: flex; gap: 0.5rem; }
 
 .chat-input input {
   flex: 1;
-  padding: 0.8rem;
-  border-radius: 0.5rem;
-  border: 1px solid #334155;
-  background: #0f172a;
-  color: #e2e8f0;
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #e5e3da;
+  background: #ffffff;
 }
 
 .chat-input button {
-  padding: 0.8rem 1.2rem;
-  background: #0ea5e9;
+  padding: 0.8rem 1.3rem;
+  background: #1a7a4c;
   color: white;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 999px;
   cursor: pointer;
+  font-weight: 600;
+}
+
+/* ===== Bottom floating nav (Telegram Mini App style) ===== */
+#nav {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.2rem;
+  background: #1e2430;
+  border-radius: 1.6rem;
+  padding: 0.5rem 0.6rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  z-index: 20;
+  max-width: 94vw;
+  overflow-x: auto;
+}
+
+#nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  background: transparent;
+  border: none;
+  color: #8b93a3;
+  padding: 0.5rem 0.8rem;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+#nav button .nav-icon { font-size: 1.1rem; }
+
+#nav button.active {
+  background: #3a3320;
+  color: #f0c04a;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  nav {
-    width: 100%;
-  }
+  main { padding-left: 0.8rem; padding-right: 0.8rem; }
 }
