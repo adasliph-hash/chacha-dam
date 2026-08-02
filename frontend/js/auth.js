@@ -20,6 +20,32 @@ async function handleLogin(e) {
   }
 }
 
+// Auto-login when the app is opened inside Telegram — no password needed.
+// Returns true if it successfully logged the user in.
+async function tryTelegramAutoLogin() {
+  const tg = window.Telegram && window.Telegram.WebApp;
+  if (!tg || !tg.initData) {
+    return false; // Not opened inside Telegram (e.g. testing in a normal browser)
+  }
+
+  tg.ready();
+  tg.expand();
+
+  try {
+    const data = await api.apiFetch('/api/auth/telegram-login', {
+      method: 'POST',
+      body: JSON.stringify({ initData: tg.initData })
+    });
+
+    api.setToken(data.token);
+    showApp();
+    return true;
+  } catch (err) {
+    console.error('Telegram auto-login failed:', err);
+    return false;
+  }
+}
+
 function showApp() {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
@@ -35,4 +61,4 @@ function logout() {
   document.getElementById('password').value = '';
 }
 
-window.auth = { handleLogin, showApp, logout };
+window.auth = { handleLogin, showApp, logout, tryTelegramAutoLogin };

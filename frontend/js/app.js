@@ -1,7 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Check if already logged in
+document.addEventListener('DOMContentLoaded', async () => {
+  // Check if already logged in (existing session)
   if (api.getToken()) {
     auth.showApp();
+  } else {
+    // Try silent Telegram login first — only falls back to the password
+    // form if the app wasn't opened inside Telegram (or verification fails)
+    await auth.tryTelegramAutoLogin();
   }
 
   // Login form

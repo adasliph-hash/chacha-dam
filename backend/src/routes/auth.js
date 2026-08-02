@@ -1,9 +1,91 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const router = express.Router();
 
-// POST /api/auth/login
+// Verifies that initData was genuinely produced by Telegram for our bot
+function verifyTelegramInitData(initData, botToken) {
+  const params = new URLSearchParams(initData);
+  const hash = params.get('hash');
+  if (!hash) return false;
+  params.delete('hash');
+
+  const pairs = [];
+  for (const [key, value] of params.entries()) {
+    pairs.push(`${key}=${value}`);
+  }
+  pairs.sort();
+  const dataCheckString = pairs.join('\n');
+
+  const secretKey = crypto.createHmac('sha256', 'WebAppData').update(botToken).digest();
+  const computedHash = crypto.createHmac('sha256', secretKey).update(dataCheckString).digest('hex');
+
+  return computedHash === hash;
+}
+
+// POST /api/auth/telegram-login
+// Called automatically by the frontend when opened inside Telegram.
+router.post('/telegram-login', (req, res) => {
+  try {
+    const { initData } = req.body;
+    if (!initData) {
+      return res.status(400).json({ message: 'initData is required' });
+    }
+
+    const botToken = process.env.BOT_TOKEN;
+    if (!botToken) {
+      return res.status(500).json({ message: 'Bot token not configured on server' });
+    }
+
+    if (!verifyTelegramInitData(initData, botToken)) {
+      return res.status(401).json({ message: 'Invalid Telegram data' });
+    }
+
+    const params = new URLSearchParams(initData);
+
+    // Reject stale requests (older than 24h)
+    const authDate = Number(params.get('auth_date') || 0);
+    if (!authDate || Date.now() / 1000 - authDate > 60 * 60 * 24) {
+      return res.status(401).json({ message: 'Telegram session expired, please reopen the app' });
+    }
+
+    const userJson = params.get('user');
+    const tgUser = userJson ? JSON.parse(userJson) : null;
+    if (!tgUser || !tgUser.id) {
+      return res.status(400).json({ message: 'No Telegram user info found' });
+    }
+
+    // Optional: restrict to a specific set of Telegram user IDs.
+    // Set ALLOWED_TELEGRAM_IDS="123456789,987654321" in Railway Variables to enable.
+    const allowList = process.env.ALLOWED_TELEGRAM_IDS;
+    if (allowList) {
+      const allowedIds = allowList.split(',').map(s => s.trim());
+      if (!allowedIds.includes(String(tgUser.id))) {
+        return res.status(403).json({ message: 'Your Telegram account is not authorized' });
+      }
+    }
+
+    const displayName = tgUser.username || tgUser.first_name || `user_${tgUser.id}`;
+
+    const token = jwt.sign(
+      { user: displayName, telegramId: tgUser.id, role: 'member' },
+      process.env.JWT_SECRET || 'temporary-secret-change-me',
+      { expiresIn: '30d' }
+    );
+
+    res.json({
+      success: true,
+      token,
+      user: { username: displayName, telegramId: tgUser.id }
+    });
+  } catch (err) {
+    console.error('Telegram login error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// POST /api/auth/login (fallback for access outside Telegram, e.g. admin/testing)
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
