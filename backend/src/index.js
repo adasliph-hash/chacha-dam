@@ -9,6 +9,7 @@ const costRoutes = require('./routes/costs');
 const percentRoutes = require('./routes/percent');
 const chatRoutes = require('./routes/chat');
 const ecostRoutes = require('./routes/ecost');
+const usersRoutes = require('./routes/users');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/api/costs', costRoutes);
 app.use('/api/percent', percentRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/ecost', ecostRoutes);
+app.use('/api/users', usersRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

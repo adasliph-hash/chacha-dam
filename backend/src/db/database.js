@@ -40,6 +40,16 @@ db.exec(`
     key TEXT PRIMARY KEY,
     value TEXT
   );
+
+  CREATE TABLE IF NOT EXISTS telegram_users (
+    telegram_id TEXT PRIMARY KEY,
+    username TEXT,
+    first_name TEXT,
+    last_name TEXT,
+    first_seen TEXT NOT NULL,
+    last_seen TEXT NOT NULL,
+    visit_count INTEGER NOT NULL DEFAULT 1
+  );
 `);
 
 console.log('✅ Database connected:', dbPath);

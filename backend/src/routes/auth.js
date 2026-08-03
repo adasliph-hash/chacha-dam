@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const router = express.Router();
+const { recordTelegramUser } = require('../services/userTracking');
+const { sendTelegramMessage } = require('../services/telegram');
 
 // Verifies that initData was genuinely produced by Telegram for our bot
 function verifyTelegramInitData(initData, botToken) {
@@ -67,6 +69,16 @@ router.post('/telegram-login', (req, res) => {
     }
 
     const displayName = tgUser.username || tgUser.first_name || `user_${tgUser.id}`;
+
+    // Track this user (new or returning) and notify the admin chat about new users
+    const { isNew, totalUsers } = recordTelegramUser(tgUser);
+    if (isNew) {
+      const fullName = [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ');
+      const usernamePart = tgUser.username ? `@${tgUser.username}` : '(no username)';
+      sendTelegramMessage(
+        `🆕 <b>New Chacha Dam App User</b>\n\n👤 ${fullName || 'Unknown'} ${usernamePart}\n🆔 ${tgUser.id}\n\n👥 Total users: <b>${totalUsers}</b>`
+      ).catch(err => console.error('Failed to notify new user:', err.message));
+    }
 
     const token = jwt.sign(
       { user: displayName, telegramId: tgUser.id, role: 'member' },
