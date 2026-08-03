@@ -29,14 +29,6 @@ function renderIncome() {
   let html = `
     <div class="stats">
       <div class="stat">
-        <div class="label">Site Work</div>
-        <div class="value">${formatMoney(data.siteWork)}</div>
-      </div>
-      <div class="stat">
-        <div class="label">Contract</div>
-        <div class="value">${formatMoney(data.contract)}</div>
-      </div>
-      <div class="stat">
         <div class="label">Total Income</div>
         <div class="value">${formatMoney(data.total)}</div>
       </div>
