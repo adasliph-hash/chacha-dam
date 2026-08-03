@@ -1,11 +1,17 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  // Check if already logged in (existing session)
-  if (api.getToken()) {
+  const tg = window.Telegram && window.Telegram.WebApp;
+
+  if (tg && tg.initData) {
+    // Opened inside Telegram — always (re)authenticate so today's visit
+    // gets recorded for the daily digest, even if a session already exists.
+    const success = await auth.tryTelegramAutoLogin();
+    if (!success && api.getToken()) {
+      // Telegram auth call failed (e.g. brief network hiccup) but we still
+      // have a valid stored session — use it rather than showing the login form.
+      auth.showApp();
+    }
+  } else if (api.getToken()) {
     auth.showApp();
-  } else {
-    // Try silent Telegram login first — only falls back to the password
-    // form if the app wasn't opened inside Telegram (or verification fails)
-    await auth.tryTelegramAutoLogin();
   }
 
   // Login form
