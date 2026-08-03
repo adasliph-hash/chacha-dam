@@ -362,6 +362,80 @@ th { color: #9c9686; font-weight: 600; font-size: 0.75rem; text-transform: upper
 
 #nav button .nav-icon { transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease; }
 
+/* ===== Light/Dark theme toggle button ===== */
+.theme-toggle-btn {
+  position: fixed;
+  top: 0.8rem;
+  right: 0.8rem;
+  z-index: 30;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Dark theme (follows Telegram's colorScheme, or manual toggle) ===== */
+body.dark-theme {
+  background: #12151c;
+  color: #e5e7eb;
+}
+
+body.dark-theme .theme-toggle-btn {
+  background: rgba(30,34,44,0.85);
+}
+
+body.dark-theme .stat {
+  background: linear-gradient(160deg, #232834, #1a1e27);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+body.dark-theme .stat .label { color: #9aa5b8; }
+body.dark-theme .stat .value { color: #34d399; }
+
+body.dark-theme .toggle-btn {
+  background: #1c212b;
+  border-color: #2a2f3a;
+  color: #b7c0d1;
+}
+
+body.dark-theme .toggle-btn.active {
+  background: linear-gradient(135deg, #4a3d15, #6b5620);
+  border-color: #d8a935;
+  color: #f6d876;
+  box-shadow: 0 3px 8px rgba(216, 169, 53, 0.25);
+}
+
+body.dark-theme .bill-card {
+  background: #1c212b;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+body.dark-theme .bill-name { color: #e5e7eb; }
+body.dark-theme .bill-meta { color: #34d399; }
+body.dark-theme .bill-meta .count { color: #7b8494; }
+body.dark-theme .bill-chevron { color: #7b8494; }
+body.dark-theme .bill-items { border-top-color: #2a2f3a; }
+
+body.dark-theme table { color: #d1d5db; }
+body.dark-theme th { color: #9aa5b8; border-bottom-color: #2a2f3a; }
+body.dark-theme td { border-bottom-color: #232834; }
+
+body.dark-theme #nav {
+  background: rgba(28, 33, 43, 0.85);
+}
+
+body.dark-theme #nav button { color: #8b93a3; }
+body.dark-theme #nav button.active { color: #4da3ff; }
+
+body.dark-theme .error { color: #f87171; }
+
 /* Responsive */
 @media (max-width: 600px) {
   main { padding-left: 0.8rem; padding-right: 0.8rem; }
