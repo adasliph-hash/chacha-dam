@@ -324,42 +324,46 @@ th { color: #9c9686; font-weight: 600; font-size: 0.75rem; text-transform: upper
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.25rem;
   background: transparent;
   border: none;
   color: #8b93a3;
-  padding: 0.45rem 0.75rem;
-  border-radius: 1.2rem;
+  padding: 0.4rem 0.9rem 0.5rem;
+  border-radius: 1.4rem;
   cursor: pointer;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 600;
   white-space: nowrap;
-  transition: background 0.2s, color 0.2s, transform 0.15s;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.15s ease;
 }
 
 #nav button:active { transform: scale(0.94); }
 
 #nav button .nav-icon {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   line-height: 1;
-  width: 2rem;
-  height: 2rem;
+  width: 2.1rem;
+  height: 2.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: transparent;
-  transition: background 0.2s;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
 #nav button.active {
-  background: #3a3320;
+  background: rgba(240, 192, 74, 0.08);
   color: #f0c04a;
 }
 
 #nav button.active .nav-icon {
-  background: rgba(240, 192, 74, 0.15);
+  background: linear-gradient(135deg, #f6d876, #d8a935);
+  box-shadow: 0 3px 8px rgba(216, 169, 53, 0.45);
+  transform: scale(1.08);
 }
+
+#nav button .nav-icon { transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease; }
 
 /* Responsive */
 @media (max-width: 600px) {
