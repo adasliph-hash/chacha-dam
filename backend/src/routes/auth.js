@@ -73,11 +73,14 @@ router.post('/telegram-login', (req, res) => {
     // Track this user (new or returning) and notify the admin chat about new users
     const { isNew, totalUsers } = recordTelegramUser(tgUser);
     if (isNew) {
-      const fullName = [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ');
-      const usernamePart = tgUser.username ? `@${tgUser.username}` : '(no username)';
+      const escapeHtml = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const fullName = escapeHtml([tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ')) || 'Unknown';
+      const usernamePart = tgUser.username ? `@${escapeHtml(tgUser.username)}` : '(no username)';
       sendTelegramMessage(
-        `🆕 <b>New Chacha Dam App User</b>\n\n👤 ${fullName || 'Unknown'} ${usernamePart}\n🆔 ${tgUser.id}\n\n👥 Total users: <b>${totalUsers}</b>`
-      ).catch(err => console.error('Failed to notify new user:', err.message));
+        `🆕 <b>New Chacha Dam App User</b>\n\n👤 ${fullName} ${usernamePart}\n🆔 ${tgUser.id}\n\n👥 Total users: <b>${totalUsers}</b>`
+      )
+        .then(() => console.log(`New user notification sent for ${tgUser.id}`))
+        .catch(err => console.error('Failed to notify new user:', err.message));
     }
 
     const token = jwt.sign(

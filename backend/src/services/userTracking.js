@@ -11,9 +11,28 @@ const upsertStmt = db.prepare(`
     visit_count = visit_count + 1
 `);
 
+const upsertDailyVisitStmt = db.prepare(`
+  INSERT INTO visit_log (telegram_id, visit_date, visit_count)
+  VALUES (@telegram_id, @visit_date, 1)
+  ON CONFLICT(telegram_id, visit_date) DO UPDATE SET
+    visit_count = visit_count + 1
+`);
+
 const countStmt = db.prepare('SELECT COUNT(*) AS total FROM telegram_users');
 const listStmt = db.prepare('SELECT * FROM telegram_users ORDER BY last_seen DESC');
 const getStmt = db.prepare('SELECT * FROM telegram_users WHERE telegram_id = ?');
+
+const dailyActiveUsersStmt = db.prepare(`
+  SELECT u.telegram_id, u.username, u.first_name, u.last_name, v.visit_count
+  FROM visit_log v
+  JOIN telegram_users u ON u.telegram_id = v.telegram_id
+  WHERE v.visit_date = ?
+  ORDER BY u.first_name COLLATE NOCASE
+`);
+
+function todayDateString() {
+  return new Date().toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
+}
 
 /**
  * Records (or updates) a Telegram user's visit.
@@ -33,6 +52,11 @@ function recordTelegramUser(tgUser) {
     now: new Date().toISOString()
   });
 
+  upsertDailyVisitStmt.run({
+    telegram_id: telegramId,
+    visit_date: todayDateString()
+  });
+
   const { total } = countStmt.get();
   return { isNew, totalUsers: total };
 }
@@ -45,4 +69,11 @@ function getUserCount() {
   return countStmt.get().total;
 }
 
-module.exports = { recordTelegramUser, getAllUsers, getUserCount };
+/**
+ * Returns the list of users who opened the app on a given date (defaults to today, UTC).
+ */
+function getDailyActiveUsers(dateString) {
+  return dailyActiveUsersStmt.all(dateString || todayDateString());
+}
+
+module.exports = { recordTelegramUser, getAllUsers, getUserCount, getDailyActiveUsers, todayDateString };

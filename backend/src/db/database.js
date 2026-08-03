@@ -50,6 +50,13 @@ db.exec(`
     last_seen TEXT NOT NULL,
     visit_count INTEGER NOT NULL DEFAULT 1
   );
+
+  CREATE TABLE IF NOT EXISTS visit_log (
+    telegram_id TEXT NOT NULL,
+    visit_date TEXT NOT NULL,
+    visit_count INTEGER NOT NULL DEFAULT 1,
+    PRIMARY KEY (telegram_id, visit_date)
+  );
 `);
 
 console.log('✅ Database connected:', dbPath);
