@@ -71,7 +71,7 @@ function loadChat() {
       <div id="site-slideshow" style="position:relative;border-radius:0.8rem;overflow:hidden;background:#e5e3da">
         <div id="slideshow-track" style="display:flex;transition:transform 0.4s ease">
           ${SITE_PHOTOS.map(src => `
-            <img src="${src}" style="width:100%;flex-shrink:0;aspect-ratio:16/9;object-fit:cover;display:block" />
+            <img src="${src}" style="width:100%;flex-shrink:0;height:48vh;object-fit:cover;display:block" />
           `).join('')}
         </div>
         <div style="position:absolute;bottom:0.6rem;left:0;right:0;display:flex;justify-content:center;gap:0.4rem">
