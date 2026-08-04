@@ -1,3 +1,52 @@
+const SITE_PHOTOS = [
+  'images/site-photos/dam-1.jpg',
+  'images/site-photos/dam-2.jpg',
+  'images/site-photos/dam-3.jpg',
+  'images/site-photos/dam-4.jpg'
+];
+
+let slideshowIndex = 0;
+let slideshowTimer = null;
+
+function goToSlide(i) {
+  const track = document.getElementById('slideshow-track');
+  if (!track) return;
+  slideshowIndex = (i + SITE_PHOTOS.length) % SITE_PHOTOS.length;
+  track.style.transform = `translateX(-${slideshowIndex * 100}%)`;
+
+  document.querySelectorAll('.slide-dot').forEach((dot, idx) => {
+    dot.style.background = idx === slideshowIndex ? '#ffffff' : 'rgba(255,255,255,0.6)';
+  });
+}
+
+function initSlideshow() {
+  if (slideshowTimer) clearInterval(slideshowTimer);
+  slideshowIndex = 0;
+  goToSlide(0);
+
+  document.getElementById('slide-prev').addEventListener('click', () => {
+    goToSlide(slideshowIndex - 1);
+    resetSlideshowTimer();
+  });
+  document.getElementById('slide-next').addEventListener('click', () => {
+    goToSlide(slideshowIndex + 1);
+    resetSlideshowTimer();
+  });
+  document.querySelectorAll('.slide-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      goToSlide(Number(dot.dataset.i));
+      resetSlideshowTimer();
+    });
+  });
+
+  resetSlideshowTimer();
+}
+
+function resetSlideshowTimer() {
+  if (slideshowTimer) clearInterval(slideshowTimer);
+  slideshowTimer = setInterval(() => goToSlide(slideshowIndex + 1), 4000);
+}
+
 function loadChat() {
   const container = document.getElementById('chat-tab');
 
@@ -16,7 +65,25 @@ function loadChat() {
       </div>
       <p id="chat-status" style="margin-top:0.8rem;font-size:0.85rem;color:#9c9686"></p>
     </div>
+
+    <div class="bill-card" style="padding:0.9rem">
+      <div class="bill-name" style="margin-bottom:0.7rem">📸 Site Photos</div>
+      <div id="site-slideshow" style="position:relative;border-radius:0.8rem;overflow:hidden;background:#e5e3da">
+        <div id="slideshow-track" style="display:flex;transition:transform 0.4s ease">
+          ${SITE_PHOTOS.map(src => `
+            <img src="${src}" style="width:100%;flex-shrink:0;aspect-ratio:16/9;object-fit:cover;display:block" />
+          `).join('')}
+        </div>
+        <div style="position:absolute;bottom:0.6rem;left:0;right:0;display:flex;justify-content:center;gap:0.4rem">
+          ${SITE_PHOTOS.map((_, i) => `<span class="slide-dot" data-i="${i}" style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.6);cursor:pointer"></span>`).join('')}
+        </div>
+        <button id="slide-prev" type="button" style="position:absolute;left:0.4rem;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.35);color:#fff;border:none;width:1.8rem;height:1.8rem;border-radius:50%;cursor:pointer">‹</button>
+        <button id="slide-next" type="button" style="position:absolute;right:0.4rem;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.35);color:#fff;border:none;width:1.8rem;height:1.8rem;border-radius:50%;cursor:pointer">›</button>
+      </div>
+    </div>
   `;
+
+  initSlideshow();
 
   document.getElementById('chat-send').addEventListener('click', sendChatMessage);
   document.getElementById('chat-input').addEventListener('keypress', (e) => {
