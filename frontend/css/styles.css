@@ -53,6 +53,18 @@ body {
 }
 .login-card input:focus { outline: none; border-color: #38bdf8; }
 
+#telegram-status { padding: 1.5rem 0; text-align: center; }
+#telegram-status-text { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+#telegram-retry-btn {
+  padding: 0.7rem 1.6rem;
+  border-radius: 0.6rem;
+  border: none;
+  background: #38bdf8;
+  color: #0f172a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .login-card button {
   width: 100%;
   padding: 0.9rem;

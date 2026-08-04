@@ -30,6 +30,18 @@ async function tryTelegramAutoLogin() {
 
   tg.ready();
 
+  // Inside Telegram we never show the username/password form — hide it and
+  // show a lightweight connecting/retry state instead.
+  const loginForm = document.getElementById('login-form');
+  const statusBox = document.getElementById('telegram-status');
+  const statusText = document.getElementById('telegram-status-text');
+  const retryBtn = document.getElementById('telegram-retry-btn');
+
+  if (loginForm) loginForm.classList.add('hidden');
+  if (statusBox) statusBox.classList.remove('hidden');
+  if (statusText) statusText.textContent = 'Connecting…';
+  if (retryBtn) retryBtn.classList.add('hidden');
+
   try {
     const data = await api.apiFetch('/api/auth/telegram-login', {
       method: 'POST',
@@ -42,6 +54,11 @@ async function tryTelegramAutoLogin() {
     return true;
   } catch (err) {
     console.error('Telegram auto-login failed:', err);
+    if (statusText) statusText.textContent = "Couldn't connect. Please try again.";
+    if (retryBtn) {
+      retryBtn.classList.remove('hidden');
+      retryBtn.onclick = () => tryTelegramAutoLogin();
+    }
     return false;
   }
 }

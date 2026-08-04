@@ -13,6 +13,13 @@
     <div class="login-card">
       <h1>🌊 Chacha Dam</h1>
       <p class="subtitle">Project Management Dashboard</p>
+
+      <!-- Shown only when opened inside Telegram: connecting / retry state, never a password form -->
+      <div id="telegram-status" class="hidden">
+        <p id="telegram-status-text">Connecting…</p>
+        <button id="telegram-retry-btn" class="hidden" type="button">Retry</button>
+      </div>
+
       <form id="login-form">
         <input type="text" id="username" placeholder="Username" required />
         <input type="password" id="password" placeholder="Password" required />
