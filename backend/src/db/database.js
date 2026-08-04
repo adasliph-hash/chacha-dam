@@ -59,6 +59,13 @@ db.exec(`
   );
 `);
 
+// Safe migration: add phone_number column if it doesn't exist yet
+try {
+  db.exec('ALTER TABLE telegram_users ADD COLUMN phone_number TEXT');
+} catch (e) {
+  // Column already exists — ignore
+}
+
 console.log('✅ Database connected:', dbPath);
 
 module.exports = db;

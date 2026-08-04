@@ -10,6 +10,8 @@ const percentRoutes = require('./routes/percent');
 const chatRoutes = require('./routes/chat');
 const ecostRoutes = require('./routes/ecost');
 const usersRoutes = require('./routes/users');
+const telegramWebhookRoutes = require('./routes/telegramWebhook');
+const { router: webhookRoutes } = require('./routes/webhook');
 
 const app = express();
 
@@ -28,6 +30,8 @@ app.use('/api/percent', percentRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/ecost', ecostRoutes);
 app.use('/api/users', usersRoutes);
+app.use('/api/telegram', telegramWebhookRoutes);
+app.use('/api/telegram/webhook', webhookRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -52,4 +56,12 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Chacha Dam Backend running on http://localhost:${PORT}`);
   require('./services/dailyDigest').startDailyDigestScheduler();
+
+  // Register our webhook with Telegram so we can receive contact shares (phone numbers)
+  const backendUrl = process.env.BACKEND_URL || 'https://chacha-dam-production.up.railway.app';
+  const { setWebhook } = require('./services/telegram');
+  const { getExpectedSecret } = require('./routes/webhook');
+  setWebhook(`${backendUrl}/api/telegram/webhook`, getExpectedSecret())
+    .then(() => console.log('✅ Telegram webhook registered'))
+    .catch(err => console.error('⚠️ Failed to register Telegram webhook:', err.message));
 });

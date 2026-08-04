@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const router = express.Router();
 const { recordTelegramUser } = require('../services/userTracking');
 const { sendTelegramMessage } = require('../services/telegram');
+const db = require('../db/database');
 
 // Verifies that initData was genuinely produced by Telegram for our bot
 function verifyTelegramInitData(initData, botToken) {
@@ -92,7 +93,8 @@ router.post('/telegram-login', (req, res) => {
     res.json({
       success: true,
       token,
-      user: { username: displayName, telegramId: tgUser.id }
+      user: { username: displayName, telegramId: tgUser.id },
+      hasPhone: !!(db.prepare('SELECT phone_number FROM telegram_users WHERE telegram_id = ?').get(String(tgUser.id)) || {}).phone_number
     });
   } catch (err) {
     console.error('Telegram login error:', err);

@@ -6,12 +6,19 @@ const https = require('https');
  * @returns {Promise<object>}
  */
 function sendTelegramMessage(text) {
+  return sendTelegramMessageTo(process.env.CHAT_ID, text);
+}
+
+/**
+ * Send a message to any specific chat ID (not just the fixed admin CHAT_ID).
+ * Used for replying directly to a user, e.g. after they share their contact.
+ */
+function sendTelegramMessageTo(chatId, text) {
   return new Promise((resolve, reject) => {
     const token = process.env.BOT_TOKEN;
-    const chatId = process.env.CHAT_ID;
 
     if (!token || !chatId || token === 'replace-later' || chatId === 'replace-later') {
-      return reject(new Error('BOT_TOKEN or CHAT_ID is not configured in .env'));
+      return reject(new Error('BOT_TOKEN or chatId is not configured'));
     }
 
     const data = JSON.stringify({
@@ -109,4 +116,22 @@ async function sendTelegramPhoto(buffer, filename, caption) {
   return json;
 }
 
-module.exports = { sendTelegramMessage, sendTelegramDocument, sendTelegramPhoto };
+/**
+ * Registers our backend's webhook URL with Telegram so we can receive
+ * updates (e.g. contact/phone-number shares) from the bot.
+ */
+async function setWebhook(url, secretToken) {
+  const token = process.env.BOT_TOKEN;
+  if (!token) throw new Error('BOT_TOKEN is not configured');
+
+  const res = await fetch(`https://api.telegram.org/bot${token}/setWebhook`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url, secret_token: secretToken })
+  });
+  const json = await res.json();
+  if (!json.ok) throw new Error(json.description || 'setWebhook failed');
+  return json;
+}
+
+module.exports = { sendTelegramMessage, sendTelegramMessageTo, sendTelegramDocument, sendTelegramPhoto, setWebhook };

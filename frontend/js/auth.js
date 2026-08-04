@@ -38,10 +38,28 @@ async function tryTelegramAutoLogin() {
 
     api.setToken(data.token);
     showApp();
+    maybeRequestPhoneNumber(tg);
     return true;
   } catch (err) {
     console.error('Telegram auto-login failed:', err);
     return false;
+  }
+}
+
+// Asks the user (once) to share their phone number via Telegram's native
+// permission prompt. The number itself is delivered to our bot as a message
+// and stored server-side via the /api/telegram/webhook endpoint.
+function maybeRequestPhoneNumber(tg) {
+  if (typeof tg.requestContact !== 'function') return; // older Telegram client
+  if (localStorage.getItem('phoneShareAsked')) return;
+
+  localStorage.setItem('phoneShareAsked', '1');
+  try {
+    tg.requestContact((sent) => {
+      console.log('Phone number share requested, user responded:', sent);
+    });
+  } catch (err) {
+    console.error('requestContact failed:', err);
   }
 }
 
