@@ -5,7 +5,9 @@ const HOME_MENU_ITEMS = [
   { id: 'payroll', icon: '💵', label: 'Payroll' },
   { id: 'finance', icon: '📒', label: 'Finance' },
   { id: 'property-admin', icon: '🏢', label: 'Property Admin' },
-  { id: 'payment-status', icon: '✅', label: 'Payment Status' }
+  { id: 'payment-status', icon: '✅', label: 'Payment Status' },
+  { id: 'report', icon: '📄', label: 'Report' },
+  { id: 'payment', icon: '💳', label: 'Payment' }
 ];
 
 let homeActiveSection = null;
