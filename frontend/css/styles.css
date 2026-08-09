@@ -456,6 +456,10 @@ body.dark-theme .home-menu-item:active { background: #232834 !important; }
 body.dark-theme .home-center-item { color: #e5e7eb !important; }
 body.dark-theme #home-back-btn { color: #34d399 !important; }
 
+.cost-item-clickable { cursor: pointer; }
+.cost-item-clickable:active { background: #f3ecd4; }
+body.dark-theme .cost-item-clickable:active { background: #232834; }
+
 /* Responsive */
 @media (max-width: 600px) {
   main { padding-left: 0.8rem; padding-right: 0.8rem; }
