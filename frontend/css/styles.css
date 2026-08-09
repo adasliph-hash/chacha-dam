@@ -459,6 +459,8 @@ body.dark-theme #home-back-btn { color: #34d399 !important; }
 .cost-item-clickable { cursor: pointer; }
 .cost-item-clickable:active { background: #f3ecd4; }
 body.dark-theme .cost-item-clickable:active { background: #232834; }
+body.dark-theme .cost-tile { background: #1c212b !important; color: #e5e7eb; box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important; }
+body.dark-theme #cost-back-btn { color: #34d399 !important; }
 
 /* Responsive */
 @media (max-width: 600px) {
