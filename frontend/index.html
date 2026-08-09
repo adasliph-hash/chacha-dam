@@ -39,17 +39,17 @@
     </header>
 
     <nav id="nav">
-      <button data-tab="income" class="active">
+      <button data-tab="home" class="active">
+        <span class="nav-icon">🏠</span>
+        <span>Home</span>
+      </button>
+      <button data-tab="income">
         <span class="nav-icon">💰</span>
         <span>Income</span>
       </button>
       <button data-tab="costs">
         <span class="nav-icon">📊</span>
         <span>Costs</span>
-      </button>
-      <button data-tab="percent">
-        <span class="nav-icon">📈</span>
-        <span>Progress</span>
       </button>
       <button data-tab="ecost">
         <span class="nav-icon">🚜</span>
@@ -62,9 +62,9 @@
     </nav>
 
     <main>
-      <section id="income-tab" class="tab active"></section>
+      <section id="home-tab" class="tab active"></section>
+      <section id="income-tab" class="tab"></section>
       <section id="costs-tab" class="tab"></section>
-      <section id="percent-tab" class="tab"></section>
       <section id="ecost-tab" class="tab"></section>
       <section id="chat-tab" class="tab"></section>
     </main>
@@ -73,9 +73,9 @@
   <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/home.js"></script>
   <script src="js/income.js"></script>
   <script src="js/costs.js"></script>
-  <script src="js/percent.js"></script>
   <script src="js/ecost.js"></script>
   <script src="js/chat.js"></script>
   <script src="js/theme.js"></script>

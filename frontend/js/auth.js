@@ -84,7 +84,7 @@ function showApp() {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   // Load first tab
-  if (window.loadIncome) window.loadIncome();
+  if (window.loadHome) window.loadHome();
 }
 
 function logout() {

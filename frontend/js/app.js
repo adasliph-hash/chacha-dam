@@ -34,9 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById(`${tab}-tab`).classList.add('active');
 
       // Load data
+      if (tab === 'home' && window.loadHome) window.loadHome();
       if (tab === 'income' && window.loadIncome) window.loadIncome();
       if (tab === 'costs' && window.loadCosts) window.loadCosts();
-      if (tab === 'percent' && window.loadPercent) window.loadPercent();
       if (tab === 'ecost' && window.loadEcost) window.loadEcost();
     });
   });
