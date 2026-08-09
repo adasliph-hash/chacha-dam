@@ -448,6 +448,12 @@ body.dark-theme #nav button.active { color: #4da3ff; }
 
 body.dark-theme .error { color: #f87171; }
 
+body.dark-theme #home-menu-btn { background: rgba(30,34,44,0.9); color: #e5e7eb; }
+body.dark-theme #home-drawer { background: #1c212b; }
+body.dark-theme #home-drawer > div:first-child { border-bottom-color: #2a2f3a; color: #e5e7eb; }
+body.dark-theme .home-menu-item { color: #d1d5db !important; }
+body.dark-theme .home-menu-item:active { background: #232834 !important; }
+
 /* Responsive */
 @media (max-width: 600px) {
   main { padding-left: 0.8rem; padding-right: 0.8rem; }
