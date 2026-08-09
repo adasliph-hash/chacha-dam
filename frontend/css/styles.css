@@ -377,7 +377,7 @@ th { color: #9c9686; font-weight: 600; font-size: 0.75rem; text-transform: upper
 /* ===== Light/Dark theme toggle button ===== */
 .theme-toggle-btn {
   position: fixed;
-  top: 0.8rem;
+  top: 3.2rem;
   right: 0.8rem;
   z-index: 30;
   width: 2.4rem;
@@ -454,6 +454,7 @@ body.dark-theme #home-drawer > div:first-child { border-bottom-color: #2a2f3a; c
 body.dark-theme .home-menu-item { color: #d1d5db !important; }
 body.dark-theme .home-menu-item:active { background: #232834 !important; }
 body.dark-theme .home-center-item { color: #e5e7eb !important; }
+body.dark-theme #home-back-btn { color: #34d399 !important; }
 
 /* Responsive */
 @media (max-width: 600px) {

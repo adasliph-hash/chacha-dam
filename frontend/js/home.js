@@ -20,7 +20,7 @@ function loadHome() {
 
   container.innerHTML = `
     <button id="home-menu-btn" type="button" aria-label="Menu"
-      style="position:fixed;top:0.9rem;left:0.9rem;z-index:15;width:2.4rem;height:2.4rem;border-radius:50%;
+      style="position:fixed;top:3.2rem;left:0.9rem;z-index:15;width:2.4rem;height:2.4rem;border-radius:50%;
              border:none;background:rgba(255,255,255,0.9);box-shadow:0 2px 8px rgba(0,0,0,0.15);
              font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center">☰</button>
 
@@ -43,7 +43,7 @@ function loadHome() {
       `).join('')}
     </div>
 
-    <div id="home-content" style="padding-top:3.5rem">
+    <div id="home-content" style="padding-top:5.8rem">
       <div style="display:flex;flex-direction:column;gap:0.8rem;max-width:320px;margin:2rem auto 0">
         ${HOME_CENTER_ITEMS.map(item => `
           <button class="home-center-item bill-card" data-id="${item.id}" type="button"
@@ -100,11 +100,21 @@ function renderHomeSection(item) {
   content.style.display = 'block';
   content.style.textAlign = 'left';
   content.innerHTML = `
+    <button id="home-back-btn" type="button"
+      style="display:flex;align-items:center;gap:0.4rem;background:none;border:none;
+             color:#1a7a4c;font-weight:600;font-size:0.95rem;cursor:pointer;margin-bottom:0.8rem;padding:0.3rem 0">
+      ← Back
+    </button>
     <div class="bill-card">
       <div class="bill-name" style="margin-bottom:0.6rem">${item.icon} ${item.label}</div>
       <p style="color:#9c9686;font-size:0.9rem">ውሂብ በቅርቡ ይታከላል...</p>
     </div>
   `;
+
+  document.getElementById('home-back-btn').addEventListener('click', () => {
+    homeActiveSection = null;
+    loadHome();
+  });
 }
 
 window.loadHome = loadHome;
