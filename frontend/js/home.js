@@ -5,7 +5,10 @@ const HOME_MENU_ITEMS = [
   { id: 'payroll', icon: '💵', label: 'Payroll' },
   { id: 'finance', icon: '📒', label: 'Finance' },
   { id: 'property-admin', icon: '🏢', label: 'Property Admin' },
-  { id: 'payment-status', icon: '✅', label: 'Payment Status' },
+  { id: 'payment-status', icon: '✅', label: 'Payment Status' }
+];
+
+const HOME_CENTER_ITEMS = [
   { id: 'report', icon: '📄', label: 'Report' },
   { id: 'payment', icon: '💳', label: 'Payment' }
 ];
@@ -40,10 +43,15 @@ function loadHome() {
       `).join('')}
     </div>
 
-    <div id="home-content" style="padding-top:3.2rem;min-height:40vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#9c9686">
-      <div>
-        <div style="font-size:2rem;margin-bottom:0.5rem">☰</div>
-        <p>ከግራ በኩል ያለውን ምናሌ (☰) ይንኩ</p>
+    <div id="home-content" style="padding-top:3.5rem">
+      <div style="display:flex;flex-direction:column;gap:0.8rem;max-width:320px;margin:2rem auto 0">
+        ${HOME_CENTER_ITEMS.map(item => `
+          <button class="home-center-item bill-card" data-id="${item.id}" type="button"
+            style="display:flex;align-items:center;gap:0.9rem;padding:1.1rem;border:none;cursor:pointer;
+                   font-size:1.05rem;font-weight:600;color:#1e2430;width:100%;text-align:left">
+            <span style="font-size:1.6rem">${item.icon}</span> ${item.label}
+          </button>
+        `).join('')}
       </div>
     </div>
   `;
@@ -71,6 +79,15 @@ function loadHome() {
       homeActiveSection = id;
       renderHomeSection(item);
       closeDrawer();
+    });
+  });
+
+  document.querySelectorAll('.home-center-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const item = HOME_CENTER_ITEMS.find(m => m.id === id);
+      homeActiveSection = id;
+      renderHomeSection(item);
     });
   });
 }
