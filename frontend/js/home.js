@@ -15,6 +15,31 @@ const HOME_CENTER_ITEMS = [
 
 let homeActiveSection = null;
 
+const HOME_SECTION_DATA = {
+  finance: {
+    columns: ['Description', 'Debits (ETB)'],
+    rows: [
+      ['Machinery transport', 51591468.21],
+      ['Over time', 137410.35],
+      ['Wage daily laborers', 5800674.32],
+      ['Perdiem and traveling cost', 27089416.44],
+      ['Telephone, Water, ...', 425790.38],
+      ['Entertainment — Irrigation project', 654898.10],
+      ['Tyre & Inner tube', 325550.00],
+      ['Fuel & Lubricants', null],
+      ['House rent', 300000.00],
+      ['Machinery rent', 9428309.11],
+      ['Vehicle expense', 1149836.87],
+      ['Repair vehicle, machinery', 741877.84],
+      ['Medical expense', 291274.30],
+      ['Penalty', 11927.00],
+      ['Sub contractor', 574832.83],
+      ['Other Costs', 1188651.73]
+    ],
+    total: 99711917.48
+  }
+};
+
 function loadHome() {
   const container = document.getElementById('home-tab');
 
@@ -96,25 +121,66 @@ function renderHomeSection(item) {
   const content = document.getElementById('home-content');
   if (!content) return;
 
-  // Placeholder — real data for each section will be added later
+  const data = HOME_SECTION_DATA[item.id];
+
   content.style.display = 'block';
   content.style.textAlign = 'left';
-  content.innerHTML = `
+
+  const backBtn = `
     <button id="home-back-btn" type="button"
       style="display:flex;align-items:center;gap:0.4rem;background:none;border:none;
              color:#1a7a4c;font-weight:600;font-size:0.95rem;cursor:pointer;margin-bottom:0.8rem;padding:0.3rem 0">
       ← Back
     </button>
-    <div class="bill-card">
-      <div class="bill-name" style="margin-bottom:0.6rem">${item.icon} ${item.label}</div>
-      <p style="color:#9c9686;font-size:0.9rem">ውሂብ በቅርቡ ይታከላል...</p>
-    </div>
   `;
+
+  if (data) {
+    content.innerHTML = `
+      ${backBtn}
+      <div class="stats">
+        <div class="stat">
+          <div class="label">${item.label} Total</div>
+          <div class="value">${formatMoney(data.total)}</div>
+        </div>
+      </div>
+      <div class="bill-card">
+        <table>
+          <thead>
+            <tr>${data.columns.map(c => `<th>${c}</th>`).join('')}</tr>
+          </thead>
+          <tbody>
+            ${data.rows.map(row => `
+              <tr>
+                <td>${row[0]}</td>
+                <td>${row[1] != null ? formatMoney(row[1]) : '—'}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } else {
+    content.innerHTML = `
+      ${backBtn}
+      <div class="bill-card">
+        <div class="bill-name" style="margin-bottom:0.6rem">${item.icon} ${item.label}</div>
+        <p style="color:#9c9686;font-size:0.9rem">ውሂብ በቅርቡ ይታከላል...</p>
+      </div>
+    `;
+  }
 
   document.getElementById('home-back-btn').addEventListener('click', () => {
     homeActiveSection = null;
     loadHome();
   });
+}
+
+function formatMoney(num) {
+  return new Intl.NumberFormat('en-ET', {
+    style: 'currency',
+    currency: 'ETB',
+    maximumFractionDigits: 2
+  }).format(num);
 }
 
 window.loadHome = loadHome;
