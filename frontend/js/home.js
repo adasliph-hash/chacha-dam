@@ -37,6 +37,14 @@ const HOME_SECTION_DATA = {
       ['Other Costs', 1188651.73]
     ],
     total: 99711917.48
+  },
+  report: {
+    columns: ['Description', 'Plan (Birr)', 'Executed (Birr)'],
+    rows: [
+      ['Income', 1890234761.77, 1890234761.77],
+      ['Income (with escalation)', 1890234761.77, 1890234761.77],
+      ['Expense', 9648269.36, 9648269.36]
+    ]
   }
 };
 
@@ -137,12 +145,14 @@ function renderHomeSection(item) {
   if (data) {
     content.innerHTML = `
       ${backBtn}
-      <div class="stats">
-        <div class="stat">
-          <div class="label">${item.label} Total</div>
-          <div class="value">${formatMoney(data.total)}</div>
+      ${data.total != null ? `
+        <div class="stats">
+          <div class="stat">
+            <div class="label">${item.label} Total</div>
+            <div class="value">${formatMoney(data.total)}</div>
+          </div>
         </div>
-      </div>
+      ` : ''}
       <div class="bill-card">
         <table>
           <thead>
@@ -151,8 +161,7 @@ function renderHomeSection(item) {
           <tbody>
             ${data.rows.map(row => `
               <tr>
-                <td>${row[0]}</td>
-                <td>${row[1] != null ? formatMoney(row[1]) : '—'}</td>
+                ${row.map((cell, i) => `<td>${i === 0 ? cell : (cell != null ? formatMoney(cell) : '—')}</td>`).join('')}
               </tr>
             `).join('')}
           </tbody>
