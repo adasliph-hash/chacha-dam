@@ -45,6 +45,48 @@ const HOME_SECTION_DATA = {
       ['Income (with escalation)', 1890234761.77, 1890234761.77],
       ['Expense', 9648269.36, 9648269.36]
     ]
+  },
+  'property-admin': {
+    columns: ['Description', 'Amount (Birr)'],
+    rows: [
+      ['Machinery transport expense — AJIMA CHACHA — LOT-03', 51591468.21],
+      ['Over time expense — AJIMA CHACHA PROJECT — LOT-03', 139889.85],
+      ['Wage daily laborers — CHACHA IRRIGATION — LOT-03', 5806436.55],
+      ['Perdiem and traveling cost — AJIMA CHACHA — LOT-03', 27089416.44],
+      ['Telephone, Water, Electricity and internet — AJIMA CHACHA — LOT3', 394490.38],
+      ['Entertainment — Irrigation project — AJIMA CHACHA — LOT-03', 654898.10],
+      ['Pipe Expense — Building construction — Ajima Chacha Irrigation-3', 170083.57],
+      ['Fitting Expense — Building construction — Ajima Chacha — 03', 63418.02],
+      ['Spare part for pump, generator & cons. — Ajima Chacha — LOT-03', 103065.01],
+      ['Other Construction material (nails, timber) — Ajima Chacha — LOT-3', 7254545.35],
+      ['Camping Item (biret dist, stove, etc) — Ajima Chacha — LOT-03', 246876.81],
+      ['Cleaning & Sanitation Expense — Ajima Chacha Irrigation — LOT-3', 173015.91],
+      ['Supplies & Stationary Expense — Ajima Chacha Irrigation — LOT-03', 1038568.04],
+      ['Uniform and Clothing Expense — Ajima Chacha Irrigation — LOT-03', 1183152.99],
+      ['Receipt & Voucher Expense — Ajima Chacha Irrigation — LOT-03', 94944.14],
+      ['Pharmaceutical, Treatment item & lab — Ajima Chacha Irrigation — LOT-3', 104005.37],
+      ['Spare Part Expense — Ajima Chacha Irrigation — LOT-03', 18196084.34],
+      ['Tyre & Inner tube Expense — Ajima Chacha Irrigation — LOT-3', 13756237.00],
+      ['Fuel & Lubricants Expense — Ajima Chacha Irrigation — LOT-3', 126002900.76],
+      ['Cement Expense — Ajima Chacha Irrigation — LOT-03', 1092612.91],
+      ['Reinforcement Bar Expense — Ajima Chacha — LOT-03', 3260356.47],
+      ['Local Construction material (sand, gravel, stone) — LOT-03', 25911831.59],
+      ['Machinery rent expense — Chacha project — LOT-03', 9428309.11],
+      ['Vehicle expense — Chacha project — LOT-03', 1149836.87],
+      ['Generator Fuel & Lubricants Expense — AJIMA CHACHA — LOT-03', 6615130.84],
+      ['Repair (vehicle, machinery) expense — Chacha project — LOT-03', 936877.84],
+      ['Medical expense — Chacha project — LOT-03', 291274.30],
+      ['Penalty expense — Chacha project — LOT-03', 11927.00],
+      ['Sub contractor expense — Chacha project — LOT-03', 574832.83],
+      ['Other Costs — Irrigation project — AJIMA CHACHA IRRIGATION — LOT-03', 1354859.56],
+      ['House rent expense — Chacha LOT-03 project', 350000.00],
+      ['DN2000mm PN10, Flanged butterfly valve', null],
+      ['1.5m diameter Howell-Bunger Regulating valve', null],
+      ['DN1500mm diameter 22.5 degree DCI double flanged bend', null],
+      ['Electric Actuator for Butterfly Valve DN2000', null],
+      ['Piezometer', null]
+    ],
+    total: 305041346.16
   }
 };
 
