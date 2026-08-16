@@ -14,6 +14,7 @@ async function handleLogin(e) {
     });
 
     api.setToken(data.token);
+    localStorage.setItem('isOwner', data.isOwner ? '1' : '0');
     showApp();
   } catch (err) {
     errorEl.textContent = err.message || 'Login failed';
@@ -49,6 +50,7 @@ async function tryTelegramAutoLogin() {
     });
 
     api.setToken(data.token);
+    localStorage.setItem('isOwner', data.isOwner ? '1' : '0');
     showApp();
     maybeRequestPhoneNumber(tg);
     return true;
@@ -89,6 +91,7 @@ function showApp() {
 
 function logout() {
   api.clearToken();
+  localStorage.removeItem('isOwner');
   document.getElementById('app').classList.add('hidden');
   document.getElementById('login-screen').classList.remove('hidden');
   document.getElementById('username').value = '';

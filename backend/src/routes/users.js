@@ -51,8 +51,13 @@ router.post('/send-daily-digest', authMiddleware, async (req, res) => {
 });
 
 // POST /api/users/notify-all — send a message directly to every registered user's chat
+// Restricted to the bot owner/admin only (req.user.role === 'admin', set at login time)
 router.post('/notify-all', authMiddleware, async (req, res) => {
   try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Only the bot owner can send broadcast notifications' });
+    }
+
     const { message } = req.body;
     if (!message || typeof message !== 'string' || !message.trim()) {
       return res.status(400).json({ message: 'Message is required' });

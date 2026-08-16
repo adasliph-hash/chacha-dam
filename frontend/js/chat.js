@@ -66,6 +66,7 @@ function loadChat() {
       <p id="chat-status" style="margin-top:0.8rem;font-size:0.85rem;color:#9c9686"></p>
     </div>
 
+    ${localStorage.getItem('isOwner') === '1' ? `
     <div class="bill-card" style="padding:0.9rem">
       <div class="bill-name" style="margin-bottom:0.5rem">📢 Notify All Users</div>
       <p style="color:#9c9686;font-size:0.82rem;margin-bottom:0.7rem">App የከፈቱ ሁሉንም ተጠቃሚዎች ቀጥታ ማሳወቂያ ላክ (የ bot chat ላይ ብቻ ሳይሆን)</p>
@@ -77,7 +78,7 @@ function loadChat() {
       </button>
       <p id="notify-status" style="margin-top:0.6rem;font-size:0.85rem;color:#9c9686"></p>
     </div>
-
+    ` : ''}
     <div class="bill-card" style="padding:0.9rem">
       <div class="bill-name" style="margin-bottom:0.7rem">📸 Site Photos</div>
       <div id="site-slideshow" style="position:relative;border-radius:0.8rem;overflow:hidden;background:#e5e3da">
@@ -125,7 +126,8 @@ function loadChat() {
     });
   });
 
-  document.getElementById('notify-send').addEventListener('click', sendNotifyAll);
+  const notifyBtn = document.getElementById('notify-send');
+  if (notifyBtn) notifyBtn.addEventListener('click', sendNotifyAll);
 }
 
 async function sendNotifyAll() {

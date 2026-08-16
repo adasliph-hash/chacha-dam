@@ -84,8 +84,12 @@ router.post('/telegram-login', (req, res) => {
         .catch(err => console.error('Failed to notify new user:', err.message));
     }
 
+    // Bot owner check — the owner gets admin-level privileges (e.g. broadcasting notifications)
+    const ownerIds = (process.env.OWNER_TELEGRAM_IDS || '1380255277').split(',').map(s => s.trim());
+    const isOwner = ownerIds.includes(String(tgUser.id));
+
     const token = jwt.sign(
-      { user: displayName, telegramId: tgUser.id, role: 'member' },
+      { user: displayName, telegramId: tgUser.id, role: isOwner ? 'admin' : 'member' },
       process.env.JWT_SECRET || 'temporary-secret-change-me',
       { expiresIn: '30d' }
     );
@@ -94,6 +98,7 @@ router.post('/telegram-login', (req, res) => {
       success: true,
       token,
       user: { username: displayName, telegramId: tgUser.id },
+      isOwner,
       hasPhone: !!(db.prepare('SELECT phone_number FROM telegram_users WHERE telegram_id = ?').get(String(tgUser.id)) || {}).phone_number
     });
   } catch (err) {
@@ -128,6 +133,7 @@ router.post('/login', async (req, res) => {
 
     res.json({
       success: true,
+      isOwner: true,
       token,
       user: { username, role: 'admin' }
     });
