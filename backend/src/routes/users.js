@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getAllUsers, getUserCount, getDailyActiveUsers, todayDateString } = require('../services/userTracking');
 const { sendDailyDigest } = require('../services/dailyDigest');
+const { sendTelegramMessageTo } = require('../services/telegram');
 const { authMiddleware } = require('../middleware/auth');
 
 // GET /api/users — list all Telegram users who have opened the app
@@ -46,6 +47,37 @@ router.post('/send-daily-digest', authMiddleware, async (req, res) => {
   } catch (err) {
     console.error('Manual daily digest error:', err);
     res.status(500).json({ message: err.message || 'Failed to send digest' });
+  }
+});
+
+// POST /api/users/notify-all — send a message directly to every registered user's chat
+router.post('/notify-all', authMiddleware, async (req, res) => {
+  try {
+    const { message } = req.body;
+    if (!message || typeof message !== 'string' || !message.trim()) {
+      return res.status(400).json({ message: 'Message is required' });
+    }
+
+    const text = `📢 <b>Chacha Dam Notification</b>\n\n${message.trim().slice(0, 1000)}`;
+    const users = getAllUsers();
+
+    let sent = 0;
+    let failed = 0;
+
+    for (const user of users) {
+      try {
+        await sendTelegramMessageTo(user.telegram_id, text);
+        sent++;
+      } catch (err) {
+        failed++;
+        console.error(`Notify failed for ${user.telegram_id}:`, err.message);
+      }
+    }
+
+    res.json({ success: true, total: users.length, sent, failed });
+  } catch (err) {
+    console.error('notify-all error:', err);
+    res.status(500).json({ message: err.message || 'Server error' });
   }
 });
 

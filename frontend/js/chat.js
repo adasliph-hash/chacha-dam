@@ -67,6 +67,18 @@ function loadChat() {
     </div>
 
     <div class="bill-card" style="padding:0.9rem">
+      <div class="bill-name" style="margin-bottom:0.5rem">📢 Notify All Users</div>
+      <p style="color:#9c9686;font-size:0.82rem;margin-bottom:0.7rem">App የከፈቱ ሁሉንም ተጠቃሚዎች ቀጥታ ማሳወቂያ ላክ (የ bot chat ላይ ብቻ ሳይሆን)</p>
+      <textarea id="notify-input" rows="3" placeholder="Notification message..."
+        style="width:100%;padding:0.7rem;border-radius:0.6rem;border:1px solid #e5e3da;font-family:inherit;resize:vertical;margin-bottom:0.6rem"></textarea>
+      <button id="notify-send" type="button"
+        style="width:100%;padding:0.7rem;border-radius:0.6rem;border:none;background:#e07a1f;color:#fff;font-weight:600;cursor:pointer">
+        Send to All Users
+      </button>
+      <p id="notify-status" style="margin-top:0.6rem;font-size:0.85rem;color:#9c9686"></p>
+    </div>
+
+    <div class="bill-card" style="padding:0.9rem">
       <div class="bill-name" style="margin-bottom:0.7rem">📸 Site Photos</div>
       <div id="site-slideshow" style="position:relative;border-radius:0.8rem;overflow:hidden;background:#e5e3da">
         <div id="slideshow-track" style="display:flex;transition:transform 0.4s ease">
@@ -112,6 +124,33 @@ function loadChat() {
       preview.innerHTML = '';
     });
   });
+
+  document.getElementById('notify-send').addEventListener('click', sendNotifyAll);
+}
+
+async function sendNotifyAll() {
+  const input = document.getElementById('notify-input');
+  const status = document.getElementById('notify-status');
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  status.textContent = 'Sending...';
+  status.style.color = '#9c9686';
+
+  try {
+    const data = await api.apiFetch('/api/users/notify-all', {
+      method: 'POST',
+      body: JSON.stringify({ message: text })
+    });
+
+    status.textContent = `✅ Sent to ${data.sent}/${data.total} users${data.failed ? ` (${data.failed} failed)` : ''}`;
+    status.style.color = '#1a7a4c';
+    input.value = '';
+  } catch (err) {
+    status.textContent = '❌ ' + err.message;
+    status.style.color = '#dc2626';
+  }
 }
 
 function fileIcon(mimeType) {
