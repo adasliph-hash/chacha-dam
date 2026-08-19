@@ -1,5 +1,4 @@
 const HOME_MENU_ITEMS = [
-  { id: 'standard', icon: '📐', label: 'Standard' },
   { id: 'efficiency', icon: '⚙️', label: 'Efficiency' },
   { id: 'staff', icon: '👥', label: 'Staff' },
   { id: 'payroll', icon: '💵', label: 'Payroll' },
@@ -10,7 +9,8 @@ const HOME_MENU_ITEMS = [
 
 const HOME_CENTER_ITEMS = [
   { id: 'report', icon: '📄', label: 'Report' },
-  { id: 'payment', icon: '💳', label: 'Payment' }
+  { id: 'payment', icon: '💳', label: 'Payment' },
+  { id: 'standard', icon: '📐', label: 'Standard' }
 ];
 
 let homeActiveSection = null;
