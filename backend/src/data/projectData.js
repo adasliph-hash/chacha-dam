@@ -7,7 +7,7 @@ function getIncomeSummary() {
   const bills = db.prepare(`SELECT id, name, icon FROM bills ORDER BY id`).all();
 
   const itemsStmt = db.prepare(`
-    SELECT no, description as d, ach, inc
+    SELECT id, no, description as d, ach, inc
     FROM bill_items
     WHERE bill_id = ?
     ORDER BY id
