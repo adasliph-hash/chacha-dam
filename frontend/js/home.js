@@ -119,7 +119,15 @@ function loadHome() {
     </div>
 
     <div id="home-content" style="padding-top:5.8rem">
-      <div style="display:flex;flex-direction:column;gap:0.8rem;max-width:320px;margin:2rem auto 0">
+      <div style="display:flex;flex-direction:column;gap:0.8rem;max-width:320px;margin:0 auto 0.8rem">
+        <button id="member-auth-btn" type="button"
+          style="display:flex;align-items:center;justify-content:center;gap:0.6rem;padding:0.9rem;
+                 border:none;border-radius:1rem;cursor:pointer;font-size:1rem;font-weight:700;
+                 color:#fff;background:linear-gradient(135deg,#1a7a4c,#0f5c37);box-shadow:0 3px 8px rgba(26,122,76,0.35)">
+          🔑 Sign In / Sign Up
+        </button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.8rem;max-width:320px;margin:0 auto 0">
         ${HOME_CENTER_ITEMS.map(item => `
           <button class="home-center-item bill-card" data-id="${item.id}" type="button"
             style="display:flex;align-items:center;gap:0.9rem;padding:1.1rem;border:none;cursor:pointer;
@@ -164,6 +172,141 @@ function loadHome() {
       homeActiveSection = id;
       renderHomeSection(item);
     });
+  });
+
+  document.getElementById('member-auth-btn').addEventListener('click', openMemberAuthModal);
+}
+
+function openMemberAuthModal() {
+  const existing = document.getElementById('member-auth-overlay');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'member-auth-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:60;display:flex;align-items:center;justify-content:center;padding:1rem';
+
+  overlay.innerHTML = `
+    <div style="background:#ffffff;border-radius:1.2rem;padding:1.4rem;width:100%;max-width:360px;max-height:90vh;overflow-y:auto">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+        <div id="member-modal-title" style="font-weight:700;font-size:1.1rem">🔑 Sign Up</div>
+        <button id="member-modal-close" type="button" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:#9c9686">✕</button>
+      </div>
+
+      <div style="display:flex;gap:0.4rem;margin-bottom:1rem;background:#f3ecd4;border-radius:0.7rem;padding:0.25rem">
+        <button id="member-tab-signup" type="button" style="flex:1;padding:0.5rem;border:none;border-radius:0.5rem;background:#fff;font-weight:700;cursor:pointer">Sign Up</button>
+        <button id="member-tab-signin" type="button" style="flex:1;padding:0.5rem;border:none;border-radius:0.5rem;background:transparent;font-weight:700;cursor:pointer;color:#8a8574">Sign In</button>
+      </div>
+
+      <form id="member-signup-form">
+        <input id="signup-name" type="text" placeholder="ሙሉ ስም" required
+          style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border-radius:0.6rem;border:1px solid #e5e3da" />
+        <input id="signup-id" type="text" placeholder="መለያ ቁጥር (ID Number)" required
+          style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border-radius:0.6rem;border:1px solid #e5e3da" />
+        <input id="signup-phone" type="tel" placeholder="ስልክ ቁጥር" required
+          style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border-radius:0.6rem;border:1px solid #e5e3da" />
+        <input id="signup-password" type="password" placeholder="የይለፍ ቃል" required
+          style="width:100%;padding:0.7rem;margin-bottom:0.8rem;border-radius:0.6rem;border:1px solid #e5e3da" />
+        <button type="submit" style="width:100%;padding:0.8rem;border:none;border-radius:0.6rem;background:#1a7a4c;color:#fff;font-weight:700;cursor:pointer">Register</button>
+      </form>
+
+      <form id="member-signin-form" class="hidden">
+        <input id="signin-id" type="text" placeholder="መለያ ቁጥር (ID Number)" required
+          style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border-radius:0.6rem;border:1px solid #e5e3da" />
+        <input id="signin-password" type="password" placeholder="የይለፍ ቃል" required
+          style="width:100%;padding:0.7rem;margin-bottom:0.8rem;border-radius:0.6rem;border:1px solid #e5e3da" />
+        <button type="submit" style="width:100%;padding:0.8rem;border:none;border-radius:0.6rem;background:#1a7a4c;color:#fff;font-weight:700;cursor:pointer">Sign In</button>
+      </form>
+
+      <p id="member-modal-status" style="margin-top:0.8rem;font-size:0.88rem;text-align:center"></p>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const close = () => overlay.remove();
+  document.getElementById('member-modal-close').addEventListener('click', close);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+
+  const signupForm = document.getElementById('member-signup-form');
+  const signinForm = document.getElementById('member-signin-form');
+  const tabSignup = document.getElementById('member-tab-signup');
+  const tabSignin = document.getElementById('member-tab-signin');
+  const title = document.getElementById('member-modal-title');
+  const status = document.getElementById('member-modal-status');
+
+  tabSignup.addEventListener('click', () => {
+    signupForm.classList.remove('hidden');
+    signinForm.classList.add('hidden');
+    tabSignup.style.background = '#fff';
+    tabSignin.style.background = 'transparent';
+    tabSignin.style.color = '#8a8574';
+    tabSignup.style.color = '#1e2430';
+    title.textContent = '🔑 Sign Up';
+    status.textContent = '';
+  });
+
+  tabSignin.addEventListener('click', () => {
+    signinForm.classList.remove('hidden');
+    signupForm.classList.add('hidden');
+    tabSignin.style.background = '#fff';
+    tabSignup.style.background = 'transparent';
+    tabSignup.style.color = '#8a8574';
+    tabSignin.style.color = '#1e2430';
+    title.textContent = '🔑 Sign In';
+    status.textContent = '';
+  });
+
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.textContent = 'Sending...';
+    status.style.color = '#9c9686';
+
+    try {
+      const res = await fetch(`${window.API_BASE_URL}/api/members/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: document.getElementById('signup-name').value,
+          idNumber: document.getElementById('signup-id').value,
+          phoneNumber: document.getElementById('signup-phone').value,
+          password: document.getElementById('signup-password').value
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Registration failed');
+
+      status.style.color = '#1a7a4c';
+      status.textContent = '✅ ' + data.message;
+      signupForm.reset();
+    } catch (err) {
+      status.style.color = '#dc2626';
+      status.textContent = '❌ ' + err.message;
+    }
+  });
+
+  signinForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.textContent = 'Checking...';
+    status.style.color = '#9c9686';
+
+    try {
+      const res = await fetch(`${window.API_BASE_URL}/api/members/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idNumber: document.getElementById('signin-id').value,
+          password: document.getElementById('signin-password').value
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Sign in failed');
+
+      status.style.color = '#1a7a4c';
+      status.textContent = `✅ Welcome, ${data.member.fullName}!`;
+    } catch (err) {
+      status.style.color = '#dc2626';
+      status.textContent = '❌ ' + err.message;
+    }
   });
 }
 

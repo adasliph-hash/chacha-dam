@@ -57,6 +57,15 @@ db.exec(`
     visit_count INTEGER NOT NULL DEFAULT 1,
     PRIMARY KEY (telegram_id, visit_date)
   );
+
+  CREATE TABLE IF NOT EXISTS members (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    full_name TEXT NOT NULL,
+    id_number TEXT NOT NULL UNIQUE,
+    phone_number TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  );
 `);
 
 // Safe migration: add phone_number column if it doesn't exist yet
