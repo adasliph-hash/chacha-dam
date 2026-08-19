@@ -125,12 +125,12 @@ function loadHome() {
     </div>
 
     <div id="home-content" style="padding-top:5.8rem">
-      <div style="display:flex;flex-direction:column;gap:0.8rem;max-width:320px;margin:0 auto 0">
+      <div style="display:flex;flex-wrap:wrap;gap:0.7rem;justify-content:center;max-width:420px;margin:0 auto 0">
         ${HOME_CENTER_ITEMS.map(item => `
           <button class="home-center-item bill-card" data-id="${item.id}" type="button"
-            style="display:flex;align-items:center;gap:0.9rem;padding:1.1rem;border:none;cursor:pointer;
-                   font-size:1.05rem;font-weight:600;color:#1e2430;width:100%;text-align:left">
-            <span style="font-size:1.6rem">${item.icon}</span> ${item.label}
+            style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.1rem;border:none;cursor:pointer;
+                   font-size:0.95rem;font-weight:600;color:#1e2430;width:auto;white-space:nowrap">
+            <span style="font-size:1.2rem">${item.icon}</span> ${item.label}
           </button>
         `).join('')}
       </div>
