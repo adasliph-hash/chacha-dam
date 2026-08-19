@@ -106,8 +106,14 @@ function loadHome() {
       style="position:fixed;top:0;left:0;bottom:0;width:78%;max-width:300px;background:#ffffff;
              box-shadow:2px 0 16px rgba(0,0,0,0.2);z-index:41;transform:translateX(-100%);
              transition:transform 0.25s ease;padding:1.2rem 0;overflow-y:auto">
-      <div style="padding:0 1.2rem 1rem;font-weight:700;font-size:1.05rem;border-bottom:1px solid #eee;margin-bottom:0.5rem">
-        🌊 Chacha Dam
+      <div style="padding:0 1.2rem 1rem;border-bottom:1px solid #eee;margin-bottom:0.5rem">
+        <div style="font-weight:700;font-size:1.05rem;margin-bottom:0.8rem">🌊 Chacha Dam</div>
+        <button id="member-auth-btn" type="button"
+          style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.7rem;width:100%;
+                 border:none;border-radius:0.8rem;cursor:pointer;font-size:0.9rem;font-weight:700;
+                 color:#fff;background:linear-gradient(135deg,#1a7a4c,#0f5c37)">
+          🔑 Sign In / Sign Up
+        </button>
       </div>
       ${HOME_MENU_ITEMS.map(item => `
         <button class="home-menu-item" data-id="${item.id}" type="button"
@@ -119,14 +125,6 @@ function loadHome() {
     </div>
 
     <div id="home-content" style="padding-top:5.8rem">
-      <div style="display:flex;flex-direction:column;gap:0.8rem;max-width:320px;margin:0 auto 0.8rem">
-        <button id="member-auth-btn" type="button"
-          style="display:flex;align-items:center;justify-content:center;gap:0.6rem;padding:0.9rem;
-                 border:none;border-radius:1rem;cursor:pointer;font-size:1rem;font-weight:700;
-                 color:#fff;background:linear-gradient(135deg,#1a7a4c,#0f5c37);box-shadow:0 3px 8px rgba(26,122,76,0.35)">
-          🔑 Sign In / Sign Up
-        </button>
-      </div>
       <div style="display:flex;flex-direction:column;gap:0.8rem;max-width:320px;margin:0 auto 0">
         ${HOME_CENTER_ITEMS.map(item => `
           <button class="home-center-item bill-card" data-id="${item.id}" type="button"
@@ -174,7 +172,10 @@ function loadHome() {
     });
   });
 
-  document.getElementById('member-auth-btn').addEventListener('click', openMemberAuthModal);
+  document.getElementById('member-auth-btn').addEventListener('click', () => {
+    closeDrawer();
+    openMemberAuthModal();
+  });
 }
 
 function openMemberAuthModal() {
