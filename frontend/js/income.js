@@ -83,11 +83,16 @@ function renderIncome() {
 
   if (isOwner) {
     html += `
-      <div style="display:flex;gap:0.6rem;align-items:center;margin-bottom:0.8rem">
+      <div style="display:flex;gap:0.6rem;align-items:center;margin-bottom:0.6rem;flex-wrap:wrap">
         <button class="toggle-btn" style="flex:none;padding:0.5rem 1rem" onclick="${incomeEditMode ? 'saveIncomeEdits()' : 'toggleIncomeEdit()'}">
           ${incomeEditMode ? '💾 Save Changes' : '✏️ Edit Figures'}
         </button>
         ${incomeEditMode ? `<button class="toggle-btn" style="flex:none;padding:0.5rem 1rem" onclick="toggleIncomeEdit()">✕ Cancel</button>` : ''}
+      </div>
+      <div style="display:flex;gap:0.6rem;align-items:center;margin-bottom:0.8rem;flex-wrap:wrap">
+        <button class="toggle-btn" style="flex:none;padding:0.5rem 1rem" onclick="downloadIncomeTemplate()">📥 Download Excel</button>
+        <button class="toggle-btn" style="flex:none;padding:0.5rem 1rem" onclick="document.getElementById('income-excel-input').click()">📤 Upload Excel</button>
+        <input type="file" id="income-excel-input" accept=".xlsx,.xls" style="display:none" onchange="uploadIncomeExcel(this.files[0])" />
         <span id="income-edit-status" style="font-size:0.85rem;color:#9c9686"></span>
       </div>
     `;
@@ -147,7 +152,69 @@ function formatMoney(num) {
   }).format(num);
 }
 
+async function downloadIncomeTemplate() {
+  const status = document.getElementById('income-edit-status');
+  status.textContent = 'Downloading...';
+  status.style.color = '#9c9686';
+
+  try {
+    const res = await fetch(`${window.API_BASE_URL}/api/income/template`, {
+      headers: { Authorization: `Bearer ${api.getToken()}` }
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.message || 'Download failed');
+    }
+
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'income-template.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+
+    status.textContent = '✅ Downloaded';
+    status.style.color = '#1a7a4c';
+  } catch (err) {
+    status.textContent = '❌ ' + err.message;
+    status.style.color = '#dc2626';
+  }
+}
+
+async function uploadIncomeExcel(file) {
+  if (!file) return;
+  const status = document.getElementById('income-edit-status');
+  status.textContent = 'Uploading...';
+  status.style.color = '#9c9686';
+
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const res = await fetch(`${window.API_BASE_URL}/api/income/upload-excel`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${api.getToken()}` },
+      body: formData
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Upload failed');
+
+    status.textContent = `✅ ${data.updated} items updated${data.skipped ? `, ${data.skipped} skipped` : ''}`;
+    status.style.color = '#1a7a4c';
+
+    await loadIncome();
+  } catch (err) {
+    status.textContent = '❌ ' + err.message;
+    status.style.color = '#dc2626';
+  }
+}
+
 window.loadIncome = loadIncome;
 window.setIncomeView = setIncomeView;
 window.toggleIncomeEdit = toggleIncomeEdit;
 window.saveIncomeEdits = saveIncomeEdits;
+window.downloadIncomeTemplate = downloadIncomeTemplate;
+window.uploadIncomeExcel = uploadIncomeExcel;
