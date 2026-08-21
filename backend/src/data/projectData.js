@@ -132,6 +132,7 @@ function getEcostSummary() {
     { no: 28, description: 'Car Guard (2)', amount: 35950.00 },
     { no: 29, description: 'Machinery Maintenance', amount: 60940.00 },
     { no: 30, description: 'Tyre & Inner Tube', amount: 13102339.85 }
+    { no: 31, description: 'Tየጎማ ጥገናr Tube', amount: 1559.85 }
   ];
 
   // Real "Machinery Cost" breakdown
