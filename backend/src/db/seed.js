@@ -112,6 +112,16 @@ const bills = [
       { no: '3.30', d: 'φ16mm bar', ach: 4918.99, inc: 336163.78 }
     ]
   }
+  {
+    id: 'LK', name: 'new bill foe test', icon: '🏠',
+    items: [
+      { no: '2.10', d: 'C-120 lean concrete', ach: 822.56, inc: 102230.84 },
+      { no: '2.30', d: 'C-302 Reinforced concrete', ach: 92.529, inc: 4727114.42 },
+      { no: '3.10', d: 'φ242mm bar', ach: 150029.95, inc: 10521146.59 },
+      { no: '3.20', d: 'φ202mm bar', ach: 7228.34, inc: 510025.93 },
+      { no: '3.30', d: 'φ162mm bar', ach: 49218.99, inc: 3361263.78 }
+    ]
+  }  
 ];
 
 const insertMany = db.transaction(() => {
