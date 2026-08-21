@@ -131,8 +131,8 @@ function getEcostSummary() {
     { no: 27, description: 'Benzine, Flasher, Brake Fluid, Transmission, Gear Oil, Grease, Coolant, ATF', amount: 5726696.73 },
     { no: 28, description: 'Car Guard (2)', amount: 35950.00 },
     { no: 29, description: 'Machinery Maintenance', amount: 60940.00 },
-    { no: 30, description: 'Tyre & Inner Tube', amount: 13102339.85 }
-    { no: 31, description: 'ጥገናr Tube', amount: 1559.85 }
+    { no: 30, description: 'Tyre & Inner Tube', amount: 13102339.85 },
+    { no: 31, description: 'ጥገናr Tube', amount: 1559.85 },
   ];
 
   // Real "Machinery Cost" breakdown
