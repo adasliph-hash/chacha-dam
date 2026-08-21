@@ -19,7 +19,7 @@ const bills = [
   {
     id: 'A', name: 'GENERAL ITEMS', icon: '🔧',
     items: [
-      { no: '1.30', d: 'Provision of safety clothing for staff and visitors', ach: 1.20, inc: 1375777.99 },
+      { no: '1.300001', d: 'Provision of safety clothing for staff and visitors', ach: 1.20, inc: 1375777.99 },
       { no: '1.12.5', d: 'Office furniture and equipment', ach: 1.04, inc: 615820.05 },
       { no: '1.12.8', d: 'Temporary utilities (electricity, water, telephone)', ach: 0.72, inc: 9141575.07 },
       { no: '1.13.3', d: 'Security provisions', ach: 0.72, inc: 1425815.46 },
