@@ -19,14 +19,12 @@ const bills = [
   {
     id: 'A', name: 'GENERAL ITEMS', icon: '🔧',
     items: [
-      { no: '1.30', d: 'Provision of safety clothing for staff and visitors', ach: 11.20, inc: 1375777.99 },
+      { no: '1.30', d: 'Provision of safety clothing for staff and visitors', ach: 1.20, inc: 1375777.99 },
       { no: '1.12.5', d: 'Office furniture and equipment', ach: 1.04, inc: 615820.05 },
       { no: '1.12.8', d: 'Temporary utilities (electricity, water, telephone)', ach: 0.72, inc: 9141575.07 },
       { no: '1.13.3', d: 'Security provisions', ach: 0.72, inc: 1425815.46 },
       { no: '1.14', d: 'Compensation payment estimation expenses', ach: 0.76, inc: 1140234.71 },
-      { no: '1.16', d: 'Provisional sum for miscellaneous work', ach: 0.07, inc: 124470.14 },
-      { no: '1.18', d: 'Compensation payment estimation expenses', ach: 0.76, inc: 1140234.71 },
-      { no: '1.19', d: 'Provisional sum for miscellaneous work', ach: 0.07, inc: 124470.14 }    
+      { no: '1.16', d: 'Provisional sum for miscellaneous work', ach: 0.07, inc: 124470.14 },   
     ]
   },
   {
@@ -110,16 +108,6 @@ const bills = [
       { no: '3.10', d: 'φ24mm bar', ach: 15009.95, inc: 1051146.59 },
       { no: '3.20', d: 'φ20mm bar', ach: 728.34, inc: 51005.93 },
       { no: '3.30', d: 'φ16mm bar', ach: 4918.99, inc: 336163.78 }
-    ]
-  },
-  {
-    id: 'LK', name: 'new bill foe test', icon: '🏠',
-    items: [
-      { no: '2.10', d: 'C-120 lean concrete', ach: 822.56, inc: 102230.84 },
-      { no: '2.30', d: 'C-302 Reinforced concrete', ach: 92.529, inc: 4727114.42 },
-      { no: '3.10', d: 'φ242mm bar', ach: 150029.95, inc: 10521146.59 },
-      { no: '3.20', d: 'φ202mm bar', ach: 7228.34, inc: 510025.93 },
-      { no: '3.30', d: 'φ162mm bar', ach: 49218.99, inc: 3361263.78 }
     ]
   },  
 ];
