@@ -111,7 +111,7 @@ const bills = [
       { no: '3.20', d: 'φ20mm bar', ach: 728.34, inc: 51005.93 },
       { no: '3.30', d: 'φ16mm bar', ach: 4918.99, inc: 336163.78 }
     ]
-  }
+  },
   {
     id: 'LK', name: 'new bill foe test', icon: '🏠',
     items: [
@@ -121,7 +121,7 @@ const bills = [
       { no: '3.20', d: 'φ202mm bar', ach: 7228.34, inc: 510025.93 },
       { no: '3.30', d: 'φ162mm bar', ach: 49218.99, inc: 3361263.78 }
     ]
-  }  
+  },  
 ];
 
 const insertMany = db.transaction(() => {
