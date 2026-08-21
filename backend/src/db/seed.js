@@ -24,8 +24,7 @@ const bills = [
       { no: '1.12.8', d: 'Temporary utilities (electricity, water, telephone)', ach: 0.72, inc: 9141575.07 },
       { no: '1.13.3', d: 'Security provisions', ach: 0.72, inc: 1425815.46 },
       { no: '1.14', d: 'Compensation payment estimation expenses', ach: 0.76, inc: 1140234.71 },
-      { no: '1.16', d: 'Provisional sum for miscellaneous work', ach: 0.07, inc: 124470.14 }
-      { no: '1.17.3', d: 'Security provisions', ach: 0.72, inc: 1425815.46 },
+      { no: '1.16', d: 'Provisional sum for miscellaneous work', ach: 0.07, inc: 124470.14 },
       { no: '1.18', d: 'Compensation payment estimation expenses', ach: 0.76, inc: 1140234.71 },
       { no: '1.19', d: 'Provisional sum for miscellaneous work', ach: 0.07, inc: 124470.14 }    
     ]
