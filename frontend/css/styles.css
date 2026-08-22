@@ -111,6 +111,20 @@ main {
 .tab { display: none; }
 .tab.active { display: block; }
 
+#home-tab.active {
+  background-image: linear-gradient(rgba(240,239,232,0.90), rgba(240,239,232,0.90)), url('images/home-bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: -1rem -1rem 0 -1rem;
+  padding: 1rem 1rem 6.5rem 1rem;
+}
+
+body.dark-theme #home-tab.active {
+  background-image: linear-gradient(rgba(18,21,28,0.90), rgba(18,21,28,0.90)), url('images/home-bg.jpg');
+}
+
 /* Top summary pills (Site Work / Contract totals) */
 .stats {
   display: grid;
