@@ -60,9 +60,9 @@ const STANDARD_SECTIONS = [
   {
     title: '3. Excavator Loading Output',
     table: {
-      columns: ['Description', 'm³/hr', 'Biyajo/hr', 'Cycle Time', 'ምን ማለት ነው'],
+      columns: ['Description', 'm³/hr', 'Biyajo/hr', 'Cycle Time'],
       rows: [
-        ['River Sand Production and Loading', '192', '12', '5 ደቂቃ', 'Moving the dump material']
+        ['River Sand Production and Loading', '192', '12', '5 ደቂቃ']
       ]
     }
   }
@@ -385,10 +385,10 @@ function renderHomeSection(item) {
       <div class="bill-name" style="margin-bottom:1rem;font-size:1.1rem">📐 Dump Truck • Loader • Excavator — Project Standard</div>
       ${STANDARD_SECTIONS.map(section => `
         <div class="bill-card" style="margin-bottom:1rem">
-          <div class="bill-name" style="margin-bottom:0.7rem;color:#1a7a4c">${section.title}</div>
+          <div class="bill-name" style="margin-bottom:0.7rem;color:#0f5c37;font-size:1.05rem;font-weight:800;border-bottom:2px solid #1a7a4c;padding-bottom:0.4rem">${section.title}</div>
           ${section.subsections ? section.subsections.map(sub => `
             <div style="margin-bottom:1rem">
-              <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;color:#55503f">${sub.subtitle}</div>
+              <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;color:#a5690a;background:#fdf3df;padding:0.35rem 0.6rem;border-radius:0.4rem">${sub.subtitle}</div>
               <table>
                 <tbody>
                   ${sub.rows.map(row => `<tr><td>${row[0]}</td><td style="font-weight:700">${row[1]}</td></tr>`).join('')}

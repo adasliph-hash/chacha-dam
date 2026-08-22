@@ -454,6 +454,7 @@ body.dark-theme #home-drawer > div:first-child { border-bottom-color: #2a2f3a; c
 body.dark-theme .home-menu-item { color: #d1d5db !important; }
 body.dark-theme .home-menu-item:active { background: #232834 !important; }
 body.dark-theme .home-center-item { color: #e5e7eb !important; }
+body.dark-theme #home-content [style*="background:#fdf3df"] { background: #3a3320 !important; color: #f0c04a !important; }
 body.dark-theme #home-back-btn { color: #34d399 !important; }
 
 .cost-item-clickable { cursor: pointer; }
