@@ -54,7 +54,33 @@ body {
 .login-card input:focus { outline: none; border-color: #38bdf8; }
 
 #telegram-status { padding: 1.5rem 0; text-align: center; }
-#telegram-status-text { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+#telegram-status-text {
+  color: #cbd5e1;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+  animation: fadeInOut 1.8s ease-in-out infinite;
+}
+
+.spinner {
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: 0 auto 1.2rem;
+  border-radius: 50%;
+  border: 3px solid rgba(56, 189, 248, 0.2);
+  border-top-color: #38bdf8;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
 #telegram-retry-btn {
   padding: 0.7rem 1.6rem;
   border-radius: 0.6rem;
