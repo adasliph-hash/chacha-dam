@@ -449,7 +449,7 @@ function renderHomeSection(item) {
       ${backBtn}
       <div class="bill-card">
         <div class="bill-name" style="margin-bottom:0.6rem">${item.icon} ${item.label}</div>
-        <p style="color:#9c9686;font-size:0.9rem">ውሂብ በቅርቡ ይታከላል...</p>
+        <p style="color:#9c9686;font-size:0.9rem">Data coming soon...</p>
       </div>
     `;
   }
