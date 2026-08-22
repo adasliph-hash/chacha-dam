@@ -15,6 +15,59 @@ const HOME_CENTER_ITEMS = [
 
 let homeActiveSection = null;
 
+// Productivity Standard reference data (Dump Truck / Loader / Excavator)
+const STANDARD_SECTIONS = [
+  {
+    title: '1. Dump Truck Hauling Output',
+    subsections: [
+      {
+        subtitle: '1.1 Sand (Hauling distance = 0.5 km)',
+        rows: [
+          ['Truck Capacity', '16 m³'],
+          ['Loading time', '4 ደቂቃ'],
+          ['Haul + Dump + Return + Spotting', '6 ደቂቃ'],
+          ['ጠቅላላ Cycle Time', '10 ደቂቃ'],
+          ['Biyajo per hour', '6'],
+          ['Output (m³/hr)', '96'],
+          ['Output (m³/Day)', '768']
+        ]
+      },
+      {
+        subtitle: '1.2 Gravel & Sand (cartaway) (Hauling distance = 0.3 km)',
+        rows: [
+          ['Truck Capacity', '16 m³'],
+          ['Loading time', '4 ደቂቃ'],
+          ['Haul + Dump + Return + Spotting', '≈ 2.67 ደቂቃ'],
+          ['ጠቅላላ Cycle Time', '≈ 6.67 ደቂቃ'],
+          ['Biyajo per hour', '9'],
+          ['Output (m³/hr)', '144'],
+          ['Output (m³/Day)', '1,152']
+        ]
+      }
+    ]
+  },
+  {
+    title: '2. Loader Loading Output',
+    table: {
+      columns: ['Description', 'm³/hr', 'Biyajo/hr', 'Cycle Time'],
+      rows: [
+        ['Sand sieving', '48', '3', '20 ደቂቃ'],
+        ['Cart-away loading', '240', '15', '4 ደቂቃ'],
+        ['Cart-away spreading', '192', '12', '5 ደቂቃ']
+      ]
+    }
+  },
+  {
+    title: '3. Excavator Loading Output',
+    table: {
+      columns: ['Description', 'm³/hr', 'Biyajo/hr', 'Cycle Time', 'ምን ማለት ነው'],
+      rows: [
+        ['River Sand Production and Loading', '192', '12', '5 ደቂቃ', 'Moving the dump material']
+      ]
+    }
+  }
+];
+
 const HOME_SECTION_DATA = {
   finance: {
     columns: ['Description', 'Debits (ETB)'],
@@ -315,8 +368,6 @@ function renderHomeSection(item) {
   const content = document.getElementById('home-content');
   if (!content) return;
 
-  const data = HOME_SECTION_DATA[item.id];
-
   content.style.display = 'block';
   content.style.textAlign = 'left';
 
@@ -327,6 +378,45 @@ function renderHomeSection(item) {
       ← Back
     </button>
   `;
+
+  if (item.id === 'standard') {
+    content.innerHTML = `
+      ${backBtn}
+      <div class="bill-name" style="margin-bottom:1rem;font-size:1.1rem">📐 Dump Truck • Loader • Excavator — Project Standard</div>
+      ${STANDARD_SECTIONS.map(section => `
+        <div class="bill-card" style="margin-bottom:1rem">
+          <div class="bill-name" style="margin-bottom:0.7rem;color:#1a7a4c">${section.title}</div>
+          ${section.subsections ? section.subsections.map(sub => `
+            <div style="margin-bottom:1rem">
+              <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;color:#55503f">${sub.subtitle}</div>
+              <table>
+                <tbody>
+                  ${sub.rows.map(row => `<tr><td>${row[0]}</td><td style="font-weight:700">${row[1]}</td></tr>`).join('')}
+                </tbody>
+              </table>
+            </div>
+          `).join('') : ''}
+          ${section.table ? `
+            <table>
+              <thead>
+                <tr>${section.table.columns.map(c => `<th>${c}</th>`).join('')}</tr>
+              </thead>
+              <tbody>
+                ${section.table.rows.map(row => `<tr>${row.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}
+              </tbody>
+            </table>
+          ` : ''}
+        </div>
+      `).join('')}
+    `;
+    document.getElementById('home-back-btn').addEventListener('click', () => {
+      homeActiveSection = null;
+      loadHome();
+    });
+    return;
+  }
+
+  const data = HOME_SECTION_DATA[item.id];
 
   if (data) {
     content.innerHTML = `
