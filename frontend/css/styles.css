@@ -112,7 +112,7 @@ main {
 .tab.active { display: block; }
 
 #home-tab.active {
-  background-image: linear-gradient(rgba(240,239,232,0.55), rgba(240,239,232,0.55)), url('../images/home-bg.jpg');
+  background-image: url('../images/home-bg.jpg');
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
@@ -122,7 +122,7 @@ main {
 }
 
 body.dark-theme #home-tab.active {
-  background-image: linear-gradient(rgba(18,21,28,0.55), rgba(18,21,28,0.55)), url('../images/home-bg.jpg');
+  background-image: url('../images/home-bg.jpg');
 }
 
 /* Top summary pills (Site Work / Contract totals) */
